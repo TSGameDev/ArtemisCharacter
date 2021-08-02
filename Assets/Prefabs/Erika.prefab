@@ -2010,6 +2010,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cam: {fileID: 0}
+  bow: {fileID: 1271627709564355778}
   turnSmoothTime: 0.1
 --- !u!1 &6328788426149383794
 GameObject:

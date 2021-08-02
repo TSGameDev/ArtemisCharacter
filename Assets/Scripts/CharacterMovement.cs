@@ -6,6 +6,7 @@ using UnityEngine;
 public class CharacterMovement : MonoBehaviour
 {
     [SerializeField] Transform cam;
+    [SerializeField] GameObject bow;
     Animator anim;
     [SerializeField] float turnSmoothTime = 0.1f;
     float turnSmoothVelocity;
@@ -15,6 +16,8 @@ public class CharacterMovement : MonoBehaviour
 
     bool isSpritting;
     public bool IsSpritting { set{ isSpritting = value; } }
+
+    bool isArmed = true;
 
     void Awake()
     {
@@ -53,5 +56,22 @@ public class CharacterMovement : MonoBehaviour
     public void Kick()
     {
         anim.SetTrigger("Kick");
+    }
+
+    public void AnimDrawUndrawBow()
+    {
+        if(isArmed)
+        {
+            anim.SetTrigger("UndrawBow");
+            bow.SetActive(false);
+        }
+        else
+        {
+            anim.SetTrigger("DrawBow");
+            bow.SetActive(true);
+        }
+
+        isArmed = !isArmed;
+        anim.SetBool("Armed", isArmed);
     }
 }

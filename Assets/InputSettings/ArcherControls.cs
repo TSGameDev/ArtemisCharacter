@@ -65,6 +65,14 @@ public class @ArcherControls : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": ""Press""
+                },
+                {
+                    ""name"": ""DrawUndrawBow"",
+                    ""type"": ""Button"",
+                    ""id"": ""8589a034-0d33-4841-94cd-dda65a52eb39"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press""
                 }
             ],
             ""bindings"": [
@@ -232,6 +240,17 @@ public class @ArcherControls : IInputActionCollection, IDisposable
                     ""action"": ""Kick"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d4427d6e-4e5d-45eb-9e43-601cda8fc138"",
+                    ""path"": ""<Keyboard>/z"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DrawUndrawBow"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -246,6 +265,7 @@ public class @ArcherControls : IInputActionCollection, IDisposable
         m_Player_Dodge = m_Player.FindAction("Dodge", throwIfNotFound: true);
         m_Player_Punch = m_Player.FindAction("Punch", throwIfNotFound: true);
         m_Player_Kick = m_Player.FindAction("Kick", throwIfNotFound: true);
+        m_Player_DrawUndrawBow = m_Player.FindAction("DrawUndrawBow", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -301,6 +321,7 @@ public class @ArcherControls : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_Dodge;
     private readonly InputAction m_Player_Punch;
     private readonly InputAction m_Player_Kick;
+    private readonly InputAction m_Player_DrawUndrawBow;
     public struct PlayerActions
     {
         private @ArcherControls m_Wrapper;
@@ -311,6 +332,7 @@ public class @ArcherControls : IInputActionCollection, IDisposable
         public InputAction @Dodge => m_Wrapper.m_Player_Dodge;
         public InputAction @Punch => m_Wrapper.m_Player_Punch;
         public InputAction @Kick => m_Wrapper.m_Player_Kick;
+        public InputAction @DrawUndrawBow => m_Wrapper.m_Player_DrawUndrawBow;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -338,6 +360,9 @@ public class @ArcherControls : IInputActionCollection, IDisposable
                 @Kick.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnKick;
                 @Kick.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnKick;
                 @Kick.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnKick;
+                @DrawUndrawBow.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDrawUndrawBow;
+                @DrawUndrawBow.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDrawUndrawBow;
+                @DrawUndrawBow.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDrawUndrawBow;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -360,6 +385,9 @@ public class @ArcherControls : IInputActionCollection, IDisposable
                 @Kick.started += instance.OnKick;
                 @Kick.performed += instance.OnKick;
                 @Kick.canceled += instance.OnKick;
+                @DrawUndrawBow.started += instance.OnDrawUndrawBow;
+                @DrawUndrawBow.performed += instance.OnDrawUndrawBow;
+                @DrawUndrawBow.canceled += instance.OnDrawUndrawBow;
             }
         }
     }
@@ -372,5 +400,6 @@ public class @ArcherControls : IInputActionCollection, IDisposable
         void OnDodge(InputAction.CallbackContext context);
         void OnPunch(InputAction.CallbackContext context);
         void OnKick(InputAction.CallbackContext context);
+        void OnDrawUndrawBow(InputAction.CallbackContext context);
     }
 }

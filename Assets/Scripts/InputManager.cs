@@ -34,6 +34,8 @@ public class InputManager : MonoBehaviour
             controls.Player.Punch.performed += _ => characterMovement.Punch();
 
             controls.Player.Kick.performed += _ => characterMovement.Kick();
+
+            controls.Player.DrawUndrawBow.performed += _ => characterMovement.AnimDrawUndrawBow();
         }
         controls.Enable();
     }
