@@ -9,9 +9,12 @@ public class InputManager : MonoBehaviour
     ArcherControls controls;
     CharacterMovement characterMovement;
 
+    bool cursorLocked = true;
+
     void Awake()
     {
         characterMovement = GetComponent<CharacterMovement>();
+        LockUnlock();
     }
 
     private void OnEnable()
@@ -38,5 +41,20 @@ public class InputManager : MonoBehaviour
     private void OnDisable()
     {
         controls.Disable();
+    }
+
+    void LockUnlock()
+    {
+        cursorLocked = !cursorLocked;
+        if(cursorLocked)
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+        }
+        else
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
     }
 }
