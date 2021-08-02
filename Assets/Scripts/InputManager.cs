@@ -21,6 +21,12 @@ public class InputManager : MonoBehaviour
             controls = new ArcherControls();
 
             controls.Player.Movement.performed += ctx => characterMovement.MovementInput = ctx.ReadValue<Vector2>().normalized;
+
+            controls.Player.Sprint.started += _ => characterMovement.IsSpritting = true;
+            controls.Player.Sprint.performed += _ => characterMovement.IsSpritting = true;
+            controls.Player.Sprint.canceled += _ => characterMovement.IsSpritting = false;
+
+            
         }
         controls.Enable();
     }
@@ -29,5 +35,4 @@ public class InputManager : MonoBehaviour
     {
         controls.Disable();
     }
-
 }

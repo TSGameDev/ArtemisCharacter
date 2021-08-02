@@ -2,16 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Animator))]
 public class CharacterMovement : MonoBehaviour
 {
     [SerializeField] Transform cam;
     Animator anim;
-    
-    Vector2 movementInput;
-    public Vector2 MovementInput { set{movementInput = value;} }
-    
     [SerializeField] float turnSmoothTime = 0.1f;
     float turnSmoothVelocity;
+
+    Vector2 movementInput;
+    public Vector2 MovementInput { set{ movementInput = value; } }
+
+    bool isSpritting;
+    public bool IsSpritting { set{ isSpritting = value; } }
 
     void Awake()
     {
@@ -28,10 +31,12 @@ public class CharacterMovement : MonoBehaviour
             transform.rotation = Quaternion.Euler(0f, angle, 0f);
 
             anim.SetBool("Non-Lock Walk", true);
+            anim.SetBool("Non-Lock Run", isSpritting);
         }
         else
         {
             anim.SetBool("Non-Lock Walk", false);
+            anim.SetBool("Non-Lock Run", false);
         }
     }
 }
