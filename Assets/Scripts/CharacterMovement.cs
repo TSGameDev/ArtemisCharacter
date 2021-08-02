@@ -39,4 +39,9 @@ public class CharacterMovement : MonoBehaviour
             anim.SetBool("Non-Lock Run", false);
         }
     }
+
+    public void DodgeDive()
+    {
+        anim.SetTrigger("Dive");
+    }
 }

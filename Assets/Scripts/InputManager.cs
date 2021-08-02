@@ -26,7 +26,7 @@ public class InputManager : MonoBehaviour
             controls.Player.Sprint.performed += _ => characterMovement.IsSpritting = true;
             controls.Player.Sprint.canceled += _ => characterMovement.IsSpritting = false;
 
-            
+            controls.Player.Dodge.performed += ctx => characterMovement.DodgeDive();
         }
         controls.Enable();
     }
