@@ -44,4 +44,14 @@ public class CharacterMovement : MonoBehaviour
     {
         anim.SetTrigger("Dive");
     }
+
+    public void Punch()
+    {
+        anim.SetTrigger("Punch");
+    }
+
+    public void Kick()
+    {
+        anim.SetTrigger("Kick");
+    }
 }
