@@ -73,6 +73,14 @@ public class @ArcherControls : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": ""Press""
+                },
+                {
+                    ""name"": ""FireBow"",
+                    ""type"": ""Button"",
+                    ""id"": ""f9ce0e06-ef36-447e-b905-20637dff8f7e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press""
                 }
             ],
             ""bindings"": [
@@ -251,6 +259,17 @@ public class @ArcherControls : IInputActionCollection, IDisposable
                     ""action"": ""DrawUndrawBow"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7d6d45aa-af64-4524-a4ca-0f4174e06a2b"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""FireBow"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -266,6 +285,7 @@ public class @ArcherControls : IInputActionCollection, IDisposable
         m_Player_Punch = m_Player.FindAction("Punch", throwIfNotFound: true);
         m_Player_Kick = m_Player.FindAction("Kick", throwIfNotFound: true);
         m_Player_DrawUndrawBow = m_Player.FindAction("DrawUndrawBow", throwIfNotFound: true);
+        m_Player_FireBow = m_Player.FindAction("FireBow", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -322,6 +342,7 @@ public class @ArcherControls : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_Punch;
     private readonly InputAction m_Player_Kick;
     private readonly InputAction m_Player_DrawUndrawBow;
+    private readonly InputAction m_Player_FireBow;
     public struct PlayerActions
     {
         private @ArcherControls m_Wrapper;
@@ -333,6 +354,7 @@ public class @ArcherControls : IInputActionCollection, IDisposable
         public InputAction @Punch => m_Wrapper.m_Player_Punch;
         public InputAction @Kick => m_Wrapper.m_Player_Kick;
         public InputAction @DrawUndrawBow => m_Wrapper.m_Player_DrawUndrawBow;
+        public InputAction @FireBow => m_Wrapper.m_Player_FireBow;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -363,6 +385,9 @@ public class @ArcherControls : IInputActionCollection, IDisposable
                 @DrawUndrawBow.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDrawUndrawBow;
                 @DrawUndrawBow.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDrawUndrawBow;
                 @DrawUndrawBow.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDrawUndrawBow;
+                @FireBow.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFireBow;
+                @FireBow.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFireBow;
+                @FireBow.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFireBow;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -388,6 +413,9 @@ public class @ArcherControls : IInputActionCollection, IDisposable
                 @DrawUndrawBow.started += instance.OnDrawUndrawBow;
                 @DrawUndrawBow.performed += instance.OnDrawUndrawBow;
                 @DrawUndrawBow.canceled += instance.OnDrawUndrawBow;
+                @FireBow.started += instance.OnFireBow;
+                @FireBow.performed += instance.OnFireBow;
+                @FireBow.canceled += instance.OnFireBow;
             }
         }
     }
@@ -401,5 +429,6 @@ public class @ArcherControls : IInputActionCollection, IDisposable
         void OnPunch(InputAction.CallbackContext context);
         void OnKick(InputAction.CallbackContext context);
         void OnDrawUndrawBow(InputAction.CallbackContext context);
+        void OnFireBow(InputAction.CallbackContext context);
     }
 }

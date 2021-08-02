@@ -74,4 +74,9 @@ public class CharacterMovement : MonoBehaviour
         isArmed = !isArmed;
         anim.SetBool("Armed", isArmed);
     }
+
+    public void FireBow()
+    {
+        anim.SetTrigger("FireArrow");
+    }
 }
