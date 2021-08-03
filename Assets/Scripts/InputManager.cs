@@ -38,6 +38,8 @@ public class InputManager : MonoBehaviour
             controls.Player.DrawUndrawBow.performed += _ => characterMovement.AnimDrawUndrawBow();
 
             controls.Player.FireBow.performed += _ => characterMovement.FireBow();
+
+            controls.Player.LockOn.performed += _ => characterMovement.ToggleLockon();
         }
         controls.Enable();
     }

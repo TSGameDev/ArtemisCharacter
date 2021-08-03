@@ -18,6 +18,7 @@ public class CharacterMovement : MonoBehaviour
     public bool IsSpritting { set{ isSpritting = value; } }
 
     bool isArmed = true;
+    bool isLocked = false;
 
     void Awake()
     {
@@ -26,20 +27,28 @@ public class CharacterMovement : MonoBehaviour
 
     void Update()
     {
-        Vector3 Direction = new Vector3(movementInput.x, 0f, movementInput.y);
-        if(Direction.magnitude >= 0.1f)
+        if(!isLocked)
         {
-            float Targetangle = Mathf.Atan2(Direction.x, Direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
-            float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, Targetangle, ref turnSmoothVelocity, turnSmoothTime);
-            transform.rotation = Quaternion.Euler(0f, angle, 0f);
+            Vector3 Direction = new Vector3(movementInput.x, 0f, movementInput.y);
+            if(Direction.magnitude >= 0.1f)
+            {
+                float Targetangle = Mathf.Atan2(Direction.x, Direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
+                float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, Targetangle, ref turnSmoothVelocity, turnSmoothTime);
+                transform.rotation = Quaternion.Euler(0f, angle, 0f);
 
-            anim.SetBool("Non-Lock Walk", true);
-            anim.SetBool("Non-Lock Run", isSpritting);
+                anim.SetBool("Walk", true);
+                anim.SetBool("Run", isSpritting);
+            }
+            else
+            {
+                anim.SetBool("Walk", false);
+                anim.SetBool("Run", false);
+            }
         }
         else
         {
-            anim.SetBool("Non-Lock Walk", false);
-            anim.SetBool("Non-Lock Run", false);
+            anim.SetFloat("X", movementInput.x);
+            anim.SetFloat("Y", movementInput.y);
         }
     }
 
@@ -78,5 +87,10 @@ public class CharacterMovement : MonoBehaviour
     public void FireBow()
     {
         anim.SetTrigger("FireArrow");
+    }
+
+    public void ToggleLockon()
+    {
+        isLocked = !isLocked;
     }
 }
