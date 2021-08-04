@@ -9,7 +9,7 @@ public class InputManager : MonoBehaviour
     ArcherControls controls;
     CharacterMovement characterMovement;
 
-    bool cursorLocked = true;
+    bool cursorLocked;
 
     void Awake()
     {
@@ -25,21 +25,21 @@ public class InputManager : MonoBehaviour
 
             controls.Player.Movement.performed += ctx => characterMovement.MovementInput = ctx.ReadValue<Vector2>().normalized;
 
-            controls.Player.Sprint.started += _ => characterMovement.IsSpritting = true;
-            controls.Player.Sprint.performed += _ => characterMovement.IsSpritting = true;
-            controls.Player.Sprint.canceled += _ => characterMovement.IsSpritting = false;
+            controls.Player.Sprint.started += ctx => characterMovement.IsSpritting = true;
+            controls.Player.Sprint.performed += ctx => characterMovement.IsSpritting = true;
+            controls.Player.Sprint.canceled += ctx => characterMovement.IsSpritting = false;
 
-            controls.Player.Dodge.performed += _ => characterMovement.DodgeDive();
+            controls.Player.Dodge.performed += ctx => characterMovement.DodgeDive();
 
-            controls.Player.Punch.performed += _ => characterMovement.Punch();
+            controls.Player.Punch.performed += ctx => characterMovement.Punch();
 
-            controls.Player.Kick.performed += _ => characterMovement.Kick();
+            controls.Player.Kick.performed += ctx => characterMovement.Kick();
 
-            controls.Player.DrawUndrawBow.performed += _ => characterMovement.AnimDrawUndrawBow();
+            controls.Player.DrawUndrawBow.performed += ctx => characterMovement.AnimDrawUndrawBow();
 
-            controls.Player.FireBow.performed += _ => characterMovement.FireBow();
+            controls.Player.FireBow.performed += ctx => characterMovement.FireBow();
 
-            controls.Player.LockOn.performed += _ => characterMovement.ToggleLockon();
+            controls.Player.LockOn.performed += ctx => characterMovement.ToggleLockon();
         }
         controls.Enable();
     }
@@ -54,13 +54,13 @@ public class InputManager : MonoBehaviour
         cursorLocked = !cursorLocked;
         if(cursorLocked)
         {
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
         }
         else
         {
-            Cursor.lockState = CursorLockMode.Locked;
-            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
         }
     }
 }
