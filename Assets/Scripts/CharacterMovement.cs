@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -24,67 +25,143 @@ public class CharacterMovement : MonoBehaviour
     public Vector2 MovementInput { set{ movementInput = value; } }
 
     bool isSpritting;
-    public bool IsSpritting { set{ isSpritting = value; } }
+    public bool IsSpritting { set{ isSpritting = value; anim.SetBool(AnimRunHash, isSpritting);} }
+
+    Action characterMovement;
 
     Animator anim;
     Transform LockedEnemy;
     bool isArmed = true;
     bool isLocked = false;
     float turnSmoothVelocity;
+    int LockMovementMax = 1;
+    int LockMovementMin = -1;
+    int LockMovementNeutral = 0;
+
+    #region Anim Hashes
+
+    int AnimXHash = Animator.StringToHash("X");
+    int AnimYHash = Animator.StringToHash("Y");
+    int AnimWalkHash = Animator.StringToHash("Walk");
+    int AnimRunHash = Animator.StringToHash("Run");
+    int AnimArmedHash = Animator.StringToHash("Armed");
+    int AnimDiveHash = Animator.StringToHash("Dive");
+    int AnimPunchHash = Animator.StringToHash("Punch");
+    int AnimKickHash = Animator.StringToHash("Kick");
+    int AnimDrawBowHash = Animator.StringToHash("DrawBow");
+    int AnimUndrawBowHash = Animator.StringToHash("UndrawBow");
+    int AnimFireArrowHash = Animator.StringToHash("FireArrow");
+
+    #endregion
 
     void Awake()
     {
         anim = GetComponent<Animator>();
+        characterMovement = Movement;
     }
 
     void Update()
     {
-        if(!isLocked)
+        characterMovement();
+    }
+
+    void Movement()
+    {
+        Vector3 Direction = new Vector3(movementInput.x, 0f, movementInput.y);
+
+        if(Direction.magnitude >= 0.1f)
         {
-            Movement();
+            float Targetangle = Mathf.Atan2(Direction.x, Direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
+            float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, Targetangle, ref turnSmoothVelocity, turnSmoothTime);
+            transform.rotation = Quaternion.Euler(0f, angle, 0f);
+
+            anim.SetBool(AnimWalkHash, true);
         }
         else
         {
-            LockOnMovement();
-            LookAtLockedEnemy();
+            anim.SetBool(AnimWalkHash, false);
+            anim.SetBool(AnimRunHash, false);
         }
+    }
+
+    void LockOnMovement()
+    {
+        LockOnMovementX();
+        LockOnMovementY();
+        LookAtLockedEnemy();
+    }
+
+    void LockOnMovementX()
+    {
+        if(movementInput.x == 0)
+        {
+            if(anim.GetFloat(AnimXHash) > 0)
+                anim.SetFloat(AnimXHash, Mathf.Clamp(anim.GetFloat(AnimXHash) - (Time.deltaTime * lockonMovementChangeSpeed), LockMovementNeutral, LockMovementMax));
+            else if(anim.GetFloat(AnimXHash) < 0)
+                anim.SetFloat(AnimXHash, Mathf.Clamp(anim.GetFloat(AnimXHash) + (Time.deltaTime * lockonMovementChangeSpeed), LockMovementMin, LockMovementNeutral));
+        }
+        else
+            anim.SetFloat(AnimXHash, Mathf.Clamp(anim.GetFloat(AnimXHash) + (movementInput.x * Time.deltaTime * lockonMovementChangeSpeed), LockMovementMin, LockMovementMax));
+    }
+
+    void LockOnMovementY()
+    {
+        if(movementInput.y == 0)
+        {
+            if(anim.GetFloat(AnimYHash) > 0)
+                anim.SetFloat(AnimYHash, Mathf.Clamp(anim.GetFloat(AnimYHash) - (Time.deltaTime * lockonMovementChangeSpeed), LockMovementNeutral, LockMovementMax));
+            else if(anim.GetFloat(AnimYHash) < 0)
+                anim.SetFloat(AnimYHash, Mathf.Clamp(anim.GetFloat(AnimYHash) + (Time.deltaTime * lockonMovementChangeSpeed), LockMovementMin, LockMovementNeutral));
+        }
+        else
+            anim.SetFloat(AnimYHash, Mathf.Clamp(anim.GetFloat(AnimYHash) + (movementInput.y * Time.deltaTime * lockonMovementChangeSpeed), LockMovementMin, LockMovementMax));
+    }
+
+    void LookAtLockedEnemy()
+    {
+        if(LockedEnemy == null){ return; }
+
+        Vector3 enemyPos = LockedEnemy.position;
+        enemyPos.y = transform.position.y;
+
+        transform.LookAt(enemyPos, Vector3.up);
     }
 
     public void DodgeDive()
     {
-        anim.SetTrigger("Dive");
+        anim.SetTrigger(AnimDiveHash);
     }
 
     public void Punch()
     {
-        anim.SetTrigger("Punch");
+        anim.SetTrigger(AnimPunchHash);
     }
 
     public void Kick()
     {
-        anim.SetTrigger("Kick");
+        anim.SetTrigger(AnimKickHash);
     }
 
     public void AnimDrawUndrawBow()
     {
         if(isArmed)
         {
-            anim.SetTrigger("UndrawBow");
+            anim.SetTrigger(AnimUndrawBowHash);
             bow.SetActive(false);
         }
         else
         {
-            anim.SetTrigger("DrawBow");
+            anim.SetTrigger(AnimDrawBowHash);
             bow.SetActive(true);
         }
 
         isArmed = !isArmed;
-        anim.SetBool("Armed", isArmed);
+        anim.SetBool(AnimArmedHash, isArmed);
     }
 
     public void FireBow()
     {
-        anim.SetTrigger("FireArrow");
+        anim.SetTrigger(AnimFireArrowHash);
     }
 
     public void ToggleLockon()
@@ -93,14 +170,17 @@ public class CharacterMovement : MonoBehaviour
 
         if(isLocked)
         {
+            characterMovement = LockOnMovement;
             anim.SetLayerWeight(1, 1);
             freeLookCam.Priority = 1;
             lockCam.Priority = 2;
             LockedEnemy = FindClosestEnemy();
             lockCam.LookAt = LockedEnemy;
+
         }
         else
         {
+            characterMovement = Movement;
             anim.SetLayerWeight(1,0);
             freeLookCam.Priority = 2;
             lockCam.Priority = 1;
@@ -129,96 +209,4 @@ public class CharacterMovement : MonoBehaviour
         return ClosestEnemy;
     }
 
-    void Movement()
-    {
-        Vector3 Direction = new Vector3(movementInput.x, 0f, movementInput.y);
-
-        if(Direction.magnitude >= 0.1f)
-        {
-            float Targetangle = Mathf.Atan2(Direction.x, Direction.z) * Mathf.Rad2Deg + cam.eulerAngles.y;
-            float angle = Mathf.SmoothDampAngle(transform.eulerAngles.y, Targetangle, ref turnSmoothVelocity, turnSmoothTime);
-            transform.rotation = Quaternion.Euler(0f, angle, 0f);
-
-            anim.SetBool("Walk", true);
-            anim.SetBool("Run", isSpritting);
-        }
-        else
-        {
-            anim.SetBool("Walk", false);
-            anim.SetBool("Run", false);
-        }
-    }
-
-    void LockOnMovement()
-    {
-        LockOnMovementX();
-        LockOnMovementY();
-        LockOnMovementFloatClamp();
-        anim.SetBool("Run", isSpritting);
-    }
-
-    void LockOnMovementX()
-    {
-        if(movementInput.x == 0)
-        {
-            if(anim.GetFloat("X") > 0)
-            {
-                anim.SetFloat("X", anim.GetFloat("X") - (Time.deltaTime * lockonMovementChangeSpeed));
-                if(anim.GetFloat("X") <= 0)
-                    anim.SetFloat("X", 0);
-            }
-            else if(anim.GetFloat("X") < 0)
-            {
-                anim.SetFloat("X", anim.GetFloat("X") + (Time.deltaTime * lockonMovementChangeSpeed));
-                if(anim.GetFloat("X") >= 0)
-                    anim.SetFloat("X", 0);
-            }
-        }
-        else
-            anim.SetFloat("X", anim.GetFloat("X") + (movementInput.x * Time.deltaTime * lockonMovementChangeSpeed));
-    }
-
-    void LockOnMovementY()
-    {
-        if(movementInput.y == 0)
-        {
-            if(anim.GetFloat("Y") > 0)
-            {
-                anim.SetFloat("Y", anim.GetFloat("Y") - (Time.deltaTime * lockonMovementChangeSpeed));
-                if(anim.GetFloat("Y") <= 0)
-                    anim.SetFloat("Y", 0);
-            }
-            else if(anim.GetFloat("Y") < 0)
-            {
-                anim.SetFloat("Y", anim.GetFloat("Y") + (Time.deltaTime * lockonMovementChangeSpeed));
-                if(anim.GetFloat("Y") >= 0)
-                    anim.SetFloat("Y", 0);
-            }
-        }
-        else
-            anim.SetFloat("Y", anim.GetFloat("Y") + (movementInput.y * Time.deltaTime * lockonMovementChangeSpeed));
-    }
-
-    void LockOnMovementFloatClamp()
-    {
-        if(anim.GetFloat("X") > 1)
-            anim.SetFloat("X", 1);
-        else if(anim.GetFloat("X") < -1)
-            anim.SetFloat("X", -1);
-
-        if(anim.GetFloat("Y") > 1)
-            anim.SetFloat("Y", 1);
-         else if(anim.GetFloat("Y") < -1)
-            anim.SetFloat("Y", -1);
-    }
-
-    void LookAtLockedEnemy()
-    {
-        if(LockedEnemy == null){ return; }
-
-        Vector3 enemyPos = LockedEnemy.position;
-        enemyPos.y = transform.position.y;
-
-        transform.LookAt(enemyPos, Vector3.up);
-    }
 }
