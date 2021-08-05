@@ -1942,6 +1942,7 @@ GameObject:
   - component: {fileID: 826618025503823331}
   - component: {fileID: 878174038}
   - component: {fileID: 878174039}
+  - component: {fileID: 6850520096134493733}
   m_Layer: 0
   m_Name: Erika
   m_TagString: Untagged
@@ -2010,7 +2011,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cam: {fileID: 0}
-  bow: {fileID: 1271627709564355778}
   freeLookCam: {fileID: 0}
   lockCam: {fileID: 0}
   turnSmoothTime: 0.1
@@ -2019,6 +2019,25 @@ MonoBehaviour:
   enemyLayer:
     serializedVersion: 2
     m_Bits: 64
+  bow: {fileID: 1271627709564355778}
+--- !u!143 &6850520096134493733
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6256415564896048419}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Height: 1.8
+  m_Radius: 0.2
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 0.9, z: 0}
 --- !u!1 &6328788426149383794
 GameObject:
   m_ObjectHideFlags: 0

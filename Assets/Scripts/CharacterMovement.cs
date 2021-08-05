@@ -84,6 +84,11 @@ public class CharacterMovement : MonoBehaviour
         {
             anim.SetBool(AnimWalkHash, false);
             anim.SetBool(AnimRunHash, false);
+
+            if(isAiming == true)
+            {
+                transform.rotation = Quaternion.Euler(0f, freeLookCam.m_XAxis.Value, 0f);
+            }
         }
     }
 
