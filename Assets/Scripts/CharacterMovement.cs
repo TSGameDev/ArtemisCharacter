@@ -87,7 +87,8 @@ public class CharacterMovement : MonoBehaviour
 
             if(isAiming == true)
             {
-                transform.rotation = Quaternion.Euler(0f, freeLookCam.m_XAxis.Value, 0f);
+                float aimAngle = Mathf.SmoothDampAngle(transform.eulerAngles.y, freeLookCam.m_XAxis.Value, ref turnSmoothVelocity, turnSmoothTime);
+                transform.rotation = Quaternion.Euler(0f, aimAngle, 0f);
             }
         }
     }
