@@ -27,6 +27,9 @@ public class CharacterMovement : MonoBehaviour
     bool isSpritting;
     public bool IsSpritting { set{ isSpritting = value; anim.SetBool(AnimRunHash, isSpritting);} }
 
+    bool isAiming;
+    public bool IsAiming{ set{isAiming = value; anim.SetBool(AnimFireArrowHash, isAiming);} }
+
     Action characterMovement;
 
     Animator anim;
@@ -157,11 +160,6 @@ public class CharacterMovement : MonoBehaviour
 
         isArmed = !isArmed;
         anim.SetBool(AnimArmedHash, isArmed);
-    }
-
-    public void FireBow()
-    {
-        anim.SetTrigger(AnimFireArrowHash);
     }
 
     public void ToggleLockon()

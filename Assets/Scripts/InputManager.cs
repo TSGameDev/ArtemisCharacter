@@ -37,7 +37,9 @@ public class InputManager : MonoBehaviour
 
             controls.Player.DrawUndrawBow.performed += ctx => characterMovement.AnimDrawUndrawBow();
 
-            controls.Player.FireBow.performed += ctx => characterMovement.FireBow();
+            controls.Player.FireBow.started += ctx => characterMovement.IsAiming = true;
+            controls.Player.FireBow.performed += ctx => characterMovement.IsAiming = true;
+            controls.Player.FireBow.canceled += ctx => characterMovement.IsAiming = false;
 
             controls.Player.LockOn.performed += ctx => characterMovement.ToggleLockon();
         }
