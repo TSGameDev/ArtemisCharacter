@@ -54,6 +54,9 @@ public class CharacterMovement : MonoBehaviour
     int AnimDrawBowHash = Animator.StringToHash("DrawBow");
     int AnimUndrawBowHash = Animator.StringToHash("UndrawBow");
     int AnimFireArrowHash = Animator.StringToHash("FireArrow");
+    int AnimFallingStateHash = Animator.StringToHash("Falling_Loop");
+    int AnimFallToIdleHash = Animator.StringToHash("FallToIdle");
+    int AnimFallToMovementHash = Animator.StringToHash("FallToMovement");
 
     #endregion
 
@@ -66,6 +69,7 @@ public class CharacterMovement : MonoBehaviour
     void Update()
     {
         characterMovement();
+        FallingCheck();
     }
 
     void Movement()
@@ -213,4 +217,33 @@ public class CharacterMovement : MonoBehaviour
         return ClosestEnemy;
     }
 
+    void FallingCheck()
+    {
+        Collider[] GroundObjs = Physics.OverlapBox(new Vector3(transform.position.x, transform.position.y - 0.25f, transform.position.z), new Vector3(0.25f, 0.25f, 0.25f));
+        if(GroundObjs.Length == 0)
+        {
+            anim.Play(AnimFallingStateHash);
+            Debug.Log("Falling!");
+        }
+        else
+        {
+            Vector3 Direction = new Vector3(movementInput.x, 0f, movementInput.y);
+
+            if(Direction.magnitude >= 0.1)
+            {
+                anim.SetTrigger(AnimFallToMovementHash);
+            }
+            else
+            {
+                anim.SetTrigger(AnimFallToIdleHash);
+            }
+        }
+    }
+
+    void OnDrawGizmosSelected()
+    {
+        Gizmos.color = Color.red;   
+        Gizmos.DrawWireCube(new Vector3(transform.position.x, transform.position.y - 0.25f, transform.position.z), new Vector3(0.5f, 0.5f, 0.5f));
+        Gizmos.DrawWireSphere(transform.position, lockonRadius);
+    }
 }
