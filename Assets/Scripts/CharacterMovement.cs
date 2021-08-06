@@ -174,30 +174,33 @@ public class CharacterMovement : MonoBehaviour
 
     public void ToggleLockon()
     {
-        isLocked = !isLocked;
-
-        if(isLocked)
+        LockedEnemy = FindClosestEnemy();
+        if(LockedEnemy != null)
         {
-            characterMovement = LockOnMovement;
-            anim.SetLayerWeight(1, 1);
-            freeLookCam.Priority = 1;
-            lockCam.Priority = 2;
-            LockedEnemy = FindClosestEnemy();
-            lockCam.LookAt = LockedEnemy;
+            isLocked = !isLocked;
+            if(isLocked)
+            {
+                characterMovement = LockOnMovement;
+                anim.SetLayerWeight(1, 1);
+                freeLookCam.Priority = 1;
+                lockCam.Priority = 2;
+                lockCam.LookAt = LockedEnemy;
 
-        }
-        else
-        {
-            characterMovement = Movement;
-            anim.SetLayerWeight(1,0);
-            freeLookCam.Priority = 2;
-            lockCam.Priority = 1;
-            lockCam.LookAt = null;
+            }
+            else
+            {
+                characterMovement = Movement;
+                anim.SetLayerWeight(1,0);
+                freeLookCam.Priority = 2;
+                lockCam.Priority = 1;
+                lockCam.LookAt = null;
+            }
         }
     }
 
     Transform FindClosestEnemy()
     {
+        Debug.Log("Finding enemy");
         float ClosestEnemyDis = Mathf.Infinity;
         Transform ClosestEnemy = null;
 
