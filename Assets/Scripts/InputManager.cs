@@ -9,12 +9,13 @@ public class InputManager : MonoBehaviour
     ArcherControls controls;
     CharacterMovement characterMovement;
 
-    bool cursorLocked;
+    bool cursorLocked = true;
 
     void Awake()
     {
         characterMovement = GetComponent<CharacterMovement>();
-        LockUnlock();
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
     }
 
     private void OnEnable()
@@ -42,6 +43,8 @@ public class InputManager : MonoBehaviour
             controls.Player.FireBow.canceled += ctx => characterMovement.IsAiming = false;
 
             controls.Player.LockOn.performed += ctx => characterMovement.ToggleLockon();
+
+            controls.Player.Escape.performed += ctx => LockUnlock();
         }
         controls.Enable();
     }
@@ -58,11 +61,13 @@ public class InputManager : MonoBehaviour
         {
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
+            OnDisable();
         }
         else
         {
             Cursor.lockState = CursorLockMode.None;
             Cursor.visible = true;
+            OnEnable();
         }
     }
 }

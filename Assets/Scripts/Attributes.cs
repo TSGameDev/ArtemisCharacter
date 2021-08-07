@@ -56,6 +56,11 @@ public class Attributes : MonoBehaviour
         }
     }
 
+    public void ReduceStamina(float staminaDamage)
+    {
+        
+    }
+
     public bool Run()
     {
         if(staminaSlider.value <= Mathf.Epsilon)

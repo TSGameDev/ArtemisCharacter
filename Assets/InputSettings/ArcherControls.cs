@@ -89,6 +89,14 @@ public class @ArcherControls : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": ""Press""
+                },
+                {
+                    ""name"": ""Escape"",
+                    ""type"": ""Button"",
+                    ""id"": ""2722005a-5f4e-4e2d-b405-890c3ee8991a"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press""
                 }
             ],
             ""bindings"": [
@@ -289,6 +297,17 @@ public class @ArcherControls : IInputActionCollection, IDisposable
                     ""action"": ""LockOn"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""da1df8e7-d7a6-4fd2-8876-b32fa0a3b7b2"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Escape"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -306,6 +325,7 @@ public class @ArcherControls : IInputActionCollection, IDisposable
         m_Player_DrawUndrawBow = m_Player.FindAction("DrawUndrawBow", throwIfNotFound: true);
         m_Player_FireBow = m_Player.FindAction("FireBow", throwIfNotFound: true);
         m_Player_LockOn = m_Player.FindAction("LockOn", throwIfNotFound: true);
+        m_Player_Escape = m_Player.FindAction("Escape", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -364,6 +384,7 @@ public class @ArcherControls : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_DrawUndrawBow;
     private readonly InputAction m_Player_FireBow;
     private readonly InputAction m_Player_LockOn;
+    private readonly InputAction m_Player_Escape;
     public struct PlayerActions
     {
         private @ArcherControls m_Wrapper;
@@ -377,6 +398,7 @@ public class @ArcherControls : IInputActionCollection, IDisposable
         public InputAction @DrawUndrawBow => m_Wrapper.m_Player_DrawUndrawBow;
         public InputAction @FireBow => m_Wrapper.m_Player_FireBow;
         public InputAction @LockOn => m_Wrapper.m_Player_LockOn;
+        public InputAction @Escape => m_Wrapper.m_Player_Escape;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -413,6 +435,9 @@ public class @ArcherControls : IInputActionCollection, IDisposable
                 @LockOn.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLockOn;
                 @LockOn.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLockOn;
                 @LockOn.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLockOn;
+                @Escape.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnEscape;
+                @Escape.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnEscape;
+                @Escape.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnEscape;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -444,6 +469,9 @@ public class @ArcherControls : IInputActionCollection, IDisposable
                 @LockOn.started += instance.OnLockOn;
                 @LockOn.performed += instance.OnLockOn;
                 @LockOn.canceled += instance.OnLockOn;
+                @Escape.started += instance.OnEscape;
+                @Escape.performed += instance.OnEscape;
+                @Escape.canceled += instance.OnEscape;
             }
         }
     }
@@ -459,5 +487,6 @@ public class @ArcherControls : IInputActionCollection, IDisposable
         void OnDrawUndrawBow(InputAction.CallbackContext context);
         void OnFireBow(InputAction.CallbackContext context);
         void OnLockOn(InputAction.CallbackContext context);
+        void OnEscape(InputAction.CallbackContext context);
     }
 }
