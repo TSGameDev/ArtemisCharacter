@@ -5,6 +5,7 @@ using UnityEngine;
 using Cinemachine;
 
 [RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(Attributes))]
 public class CharacterMovement : MonoBehaviour
 {
     [Header("Movement Settings")] [Space(10)]
@@ -22,10 +23,10 @@ public class CharacterMovement : MonoBehaviour
     [SerializeField] GameObject bow;
 
     Vector2 movementInput;
-    public Vector2 MovementInput { set{ movementInput = value; } }
+    public Vector2 MovementInput{ set{ movementInput = value; } }
 
-    bool isSpritting;
-    public bool IsSpritting { set{ isSpritting = value; anim.SetBool(AnimRunHash, isSpritting);} }
+    [SerializeField] bool isSpritting;
+    public bool IsSpritting { set{ isSpritting = value; } }
 
     bool isAiming;
     public bool IsAiming{ set{isAiming = value; anim.SetBool(AnimFireArrowHash, isAiming);} }
@@ -34,6 +35,7 @@ public class CharacterMovement : MonoBehaviour
 
     Animator anim;
     Transform LockedEnemy;
+    Attributes attributes;
     bool isArmed = true;
     bool isLocked = false;
     float turnSmoothVelocity;
@@ -63,6 +65,7 @@ public class CharacterMovement : MonoBehaviour
     void Awake()
     {
         anim = GetComponent<Animator>();
+        attributes = GetComponent<Attributes>();
         characterMovement = Movement;
     }
 
@@ -70,6 +73,7 @@ public class CharacterMovement : MonoBehaviour
     {
         characterMovement();
         FallingCheck();
+        if(isSpritting == false){ attributes.StaminaRegen(); }
     }
 
     void Movement()
@@ -83,6 +87,7 @@ public class CharacterMovement : MonoBehaviour
             transform.rotation = Quaternion.Euler(0f, angle, 0f);
 
             anim.SetBool(AnimWalkHash, true);
+            RunCheck();
         }
         else
         {
@@ -114,7 +119,10 @@ public class CharacterMovement : MonoBehaviour
                 anim.SetFloat(AnimXHash, Mathf.Clamp(anim.GetFloat(AnimXHash) + (Time.deltaTime * lockonMovementChangeSpeed), LockMovementMin, LockMovementNeutral));
         }
         else
+        {
             anim.SetFloat(AnimXHash, Mathf.Clamp(anim.GetFloat(AnimXHash) + (movementInput.x * Time.deltaTime * lockonMovementChangeSpeed), LockMovementMin, LockMovementMax));
+            RunCheck();
+        }
     }
 
     void LockOnMovementY()
@@ -127,7 +135,23 @@ public class CharacterMovement : MonoBehaviour
                 anim.SetFloat(AnimYHash, Mathf.Clamp(anim.GetFloat(AnimYHash) + (Time.deltaTime * lockonMovementChangeSpeed), LockMovementMin, LockMovementNeutral));
         }
         else
+        {
             anim.SetFloat(AnimYHash, Mathf.Clamp(anim.GetFloat(AnimYHash) + (movementInput.y * Time.deltaTime * lockonMovementChangeSpeed), LockMovementMin, LockMovementMax));
+            RunCheck();
+        }
+    }
+    
+    void RunCheck()
+    {
+        if(isSpritting == true)
+        {
+            isSpritting = attributes.Run();
+            anim.SetBool(AnimRunHash, attributes.Run());
+        }
+        else
+        {
+            anim.SetBool(AnimRunHash, false);
+        }
     }
 
     void LookAtLockedEnemy()
@@ -249,4 +273,6 @@ public class CharacterMovement : MonoBehaviour
         Gizmos.DrawWireCube(new Vector3(transform.position.x, transform.position.y - 0.25f, transform.position.z), new Vector3(0.5f, 0.5f, 0.5f));
         Gizmos.DrawWireSphere(transform.position, lockonRadius);
     }
+
+    
 }
