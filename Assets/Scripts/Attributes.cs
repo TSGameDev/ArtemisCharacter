@@ -13,6 +13,8 @@ public class Attributes : MonoBehaviour
     [SerializeField] float sprittingStaminaConsumption = 10f;
     [SerializeField] float staminaRegenRate = 10f;
 
+    [SerializeField] LayerMask enemyLayer;
+
     Animator anim;
 
     #region Animator Hashes
@@ -42,13 +44,15 @@ public class Attributes : MonoBehaviour
 
         switch(randomAnim)
         {
-            default:
             case 1:
-            anim.SetTrigger(AnimHitHash);
-            break;
+                anim.SetTrigger(AnimHitHash);
+                break;
             case 2:
-            anim.SetTrigger(AnimHitHeadHash);
-            break;
+                anim.SetTrigger(AnimHitHeadHash);
+                break;
+            default:
+                anim.SetTrigger(AnimHitHash);
+                break;
         }
     }
 
