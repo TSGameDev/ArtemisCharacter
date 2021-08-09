@@ -224,6 +224,7 @@ public class CharacterMovement : MonoBehaviour
         if (rb == null) { return; }
 
         rb.AddForce( copy.transform.forward * arrowFireForce, ForceMode.Impulse);
+        Destroy(copy, 5f);
     }
 
     public void ToggleArrow()
@@ -289,5 +290,4 @@ public class CharacterMovement : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, lockonRadius);
     }
 
-    
 }
