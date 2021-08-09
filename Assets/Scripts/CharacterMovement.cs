@@ -14,6 +14,11 @@ public class CharacterMovement : MonoBehaviour
     [SerializeField] CinemachineVirtualCamera lockCam;
     [SerializeField] float turnSmoothTime = 0.1f;
     [SerializeField] float lockonMovementChangeSpeed = 100f;
+
+    [Header("Stamina Costs")]
+    [SerializeField] float dodgeCost = 10f;
+    [SerializeField] float punchCost = 10f;
+    [SerializeField] float kickCost = 10f;
     
     [Header("Lock-On Settings")]
     [SerializeField] float lockonRadius = 10f;
@@ -29,7 +34,7 @@ public class CharacterMovement : MonoBehaviour
     public bool IsSpritting { set{ isSpritting = value; } }
 
     bool isAiming;
-    public bool IsAiming{ set{isAiming = value; anim.SetBool(AnimFireArrowHash, isAiming);} }
+    public bool IsAiming{ set{isAiming = value; anim.SetBool(AnimFireArrowHash, isAiming); } }
 
     Action characterMovement;
 
@@ -166,16 +171,19 @@ public class CharacterMovement : MonoBehaviour
     public void DodgeDive()
     {
         anim.SetTrigger(AnimDiveHash);
+        attributes.ReduceStamina(dodgeCost);
     }
 
     public void Punch()
     {
         anim.SetTrigger(AnimPunchHash);
+        attributes.ReduceStamina(punchCost);
     }
 
     public void Kick()
     {
         anim.SetTrigger(AnimKickHash);
+        attributes.ReduceStamina(kickCost);
     }
 
     public void AnimDrawUndrawBow()

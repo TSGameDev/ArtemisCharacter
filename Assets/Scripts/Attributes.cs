@@ -58,7 +58,7 @@ public class Attributes : MonoBehaviour
 
     public void ReduceStamina(float staminaDamage)
     {
-        
+        staminaSlider.value -= staminaDamage;
     }
 
     public bool Run()
