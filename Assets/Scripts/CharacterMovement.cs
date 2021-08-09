@@ -26,6 +26,11 @@ public class CharacterMovement : MonoBehaviour
 
     [Header("Equipment")]
     [SerializeField] GameObject bow;
+    [SerializeField] GameObject disarmedBow;
+    [SerializeField] GameObject arrow;
+    [SerializeField] GameObject arrowProjectile;
+    [SerializeField] GameObject arrowSpawnPoint;
+    [SerializeField] float arrowFireForce = 1000f;
 
     Vector2 movementInput;
     public Vector2 MovementInput{ set{ movementInput = value; } }
@@ -189,18 +194,44 @@ public class CharacterMovement : MonoBehaviour
     public void AnimDrawUndrawBow()
     {
         if(isArmed)
-        {
             anim.SetTrigger(AnimUndrawBowHash);
-            bow.SetActive(false);
-        }
         else
-        {
             anim.SetTrigger(AnimDrawBowHash);
-            bow.SetActive(true);
-        }
 
         isArmed = !isArmed;
         anim.SetBool(AnimArmedHash, isArmed);
+    }
+
+    public void ToggleBow()
+    {
+        if (isArmed)
+        {
+            bow.SetActive(true);
+            disarmedBow.SetActive(false);
+        }
+        else
+        {
+            bow.SetActive(false);
+            disarmedBow.SetActive(true);
+        }
+    }
+
+    public void FireArrow()
+    {
+        GameObject copy = Instantiate(arrowProjectile, arrowSpawnPoint.transform.position, arrowSpawnPoint.transform.rotation);
+        Rigidbody rb = copy.GetComponent<Rigidbody>();
+
+        if (rb == null) { return; }
+
+        rb.AddForce( copy.transform.forward * arrowFireForce, ForceMode.Impulse);
+    }
+
+    public void ToggleArrow()
+    {
+        if (isAiming)
+            arrow.SetActive(true);
+        else
+            arrow.SetActive(false);
     }
 
     public void ToggleLockon()
