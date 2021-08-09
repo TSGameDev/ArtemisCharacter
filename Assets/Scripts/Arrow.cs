@@ -19,6 +19,7 @@ public class Arrow : MonoBehaviour
 
         transform.parent = collision.gameObject.transform;
         DisableRagdoll();
+        Debug.Log(collision.gameObject.name);
     }
 
     void DisableRagdoll()

@@ -69,6 +69,7 @@ public class CharacterMovement : MonoBehaviour
     int AnimFallingStateHash = Animator.StringToHash("Falling_Loop");
     int AnimFallToIdleHash = Animator.StringToHash("FallToIdle");
     int AnimFallToMovementHash = Animator.StringToHash("FallToMovement");
+    int AnimLockedOnHash = Animator.StringToHash("LockedOn");
 
     #endregion
 
@@ -218,7 +219,14 @@ public class CharacterMovement : MonoBehaviour
 
     public void FireArrow()
     {
-        GameObject copy = Instantiate(arrowProjectile, arrowSpawnPoint.transform.position, arrowSpawnPoint.transform.rotation);
+        Vector3 direction = new Vector3(movementInput.x, 0, movementInput.y);
+        GameObject copy;
+
+        if (direction.magnitude >= 0.1f)
+            copy = Instantiate(arrowProjectile, arrowSpawnPoint.transform.position, arrowSpawnPoint.transform.rotation);
+        else
+            copy = Instantiate(arrowProjectile, arrowSpawnPoint.transform.position, cam.transform.rotation);
+
         Rigidbody rb = copy.GetComponent<Rigidbody>();
 
         if (rb == null) { return; }
@@ -241,6 +249,7 @@ public class CharacterMovement : MonoBehaviour
         if(LockedEnemy != null)
         {
             isLocked = !isLocked;
+            anim.SetBool(AnimLockedOnHash, isLocked);
             if(isLocked)
             {
                 characterMovement = LockOnMovement;
