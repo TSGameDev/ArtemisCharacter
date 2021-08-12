@@ -70,17 +70,17 @@
                     "interactions": "Press"
                 },
                 {
-                    "name": "LockOn",
+                    "name": "Escape",
                     "type": "Button",
-                    "id": "533f7455-392a-4ab1-8560-74d6a2d666a8",
+                    "id": "2722005a-5f4e-4e2d-b405-890c3ee8991a",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "Press"
                 },
                 {
-                    "name": "Escape",
+                    "name": "Aim",
                     "type": "Button",
-                    "id": "2722005a-5f4e-4e2d-b405-890c3ee8991a",
+                    "id": "d856692e-aa35-410b-bc62-2ebcc2cd5e1c",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "Press"
@@ -90,7 +90,7 @@
                 {
                     "name": "",
                     "id": "c618816b-bbf6-4dc2-8ecc-b65b1747a8c5",
-                    "path": "<Mouse>/delta",
+                    "path": "<Pointer>/delta",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -276,23 +276,23 @@
                 },
                 {
                     "name": "",
-                    "id": "96718815-05cc-44b5-b87e-550a5ed5722f",
-                    "path": "<Keyboard>/tab",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "LockOn",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "da1df8e7-d7a6-4fd2-8876-b32fa0a3b7b2",
                     "path": "<Keyboard>/escape",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "Escape",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4c492c1f-9c89-4253-b658-71840fecb570",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Aim",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

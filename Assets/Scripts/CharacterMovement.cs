@@ -11,7 +11,8 @@ public class CharacterMovement : MonoBehaviour
     [Header("Movement Settings")] [Space(10)]
     [SerializeField] Transform cam;
     [SerializeField] CinemachineFreeLook freeLookCam;
-    [SerializeField] CinemachineVirtualCamera lockCam;
+    [SerializeField] CinemachineVirtualCamera aimCam;
+    [SerializeField] Transform characterRoot;
     [SerializeField] float turnSmoothTime = 0.1f;
     [SerializeField] float lockonMovementChangeSpeed = 100f;
 
@@ -19,10 +20,6 @@ public class CharacterMovement : MonoBehaviour
     [SerializeField] float dodgeCost = 10f;
     [SerializeField] float punchCost = 10f;
     [SerializeField] float kickCost = 10f;
-    
-    [Header("Lock-On Settings")]
-    [SerializeField] float lockonRadius = 10f;
-    [SerializeField] LayerMask enemyLayer;
 
     [Header("Equipment")]
     [SerializeField] GameObject bow;
@@ -35,19 +32,27 @@ public class CharacterMovement : MonoBehaviour
     Vector2 movementInput;
     public Vector2 MovementInput{ set{ movementInput = value; } }
 
-    [SerializeField] bool isSpritting;
+    bool isSpritting;
     public bool IsSpritting { set{ isSpritting = value; } }
 
+    bool isDrawn;
+    public bool IsDrawn{ set{ isDrawn = value; anim.SetBool(AnimFireArrowHash, isDrawn); } }
+
     bool isAiming;
-    public bool IsAiming{ set{isAiming = value; anim.SetBool(AnimFireArrowHash, isAiming); } }
+    public bool IsAiming { set{ isAiming = value; AimInistalisation(); } }
+
+    [SerializeField] float mouseSenstivity = 100f;
+
+    float xRotation = 0f;
+
+    Vector2 mouseInput;
+    public Vector2 MouseInput { set { mouseInput = value; if (isAiming == true) { AimLook(); } } }
 
     Action characterMovement;
 
     Animator anim;
-    Transform LockedEnemy;
     Attributes attributes;
     bool isArmed = true;
-    bool isLocked = false;
     float turnSmoothVelocity;
     int LockMovementMax = 1;
     int LockMovementMin = -1;
@@ -66,10 +71,7 @@ public class CharacterMovement : MonoBehaviour
     int AnimDrawBowHash = Animator.StringToHash("DrawBow");
     int AnimUndrawBowHash = Animator.StringToHash("UndrawBow");
     int AnimFireArrowHash = Animator.StringToHash("FireArrow");
-    int AnimFallingStateHash = Animator.StringToHash("Falling_Loop");
-    int AnimFallToIdleHash = Animator.StringToHash("FallToIdle");
-    int AnimFallToMovementHash = Animator.StringToHash("FallToMovement");
-    int AnimLockedOnHash = Animator.StringToHash("LockedOn");
+    int AnimAimingHash = Animator.StringToHash("Aiming");
 
     #endregion
 
@@ -104,7 +106,7 @@ public class CharacterMovement : MonoBehaviour
             anim.SetBool(AnimWalkHash, false);
             anim.SetBool(AnimRunHash, false);
 
-            if(isAiming == true)
+            if(isDrawn == true)
             {
                 float aimAngle = Mathf.SmoothDampAngle(transform.eulerAngles.y, freeLookCam.m_XAxis.Value, ref turnSmoothVelocity, turnSmoothTime);
                 transform.rotation = Quaternion.Euler(0f, aimAngle, 0f);
@@ -112,14 +114,13 @@ public class CharacterMovement : MonoBehaviour
         }
     }
 
-    void LockOnMovement()
+    void AimMovement()
     {
-        LockOnMovementX();
-        LockOnMovementY();
-        LookAtLockedEnemy();
+        AimMovementX();
+        AimMovementY();
     }
 
-    void LockOnMovementX()
+    void AimMovementX()
     {
         if(movementInput.x == 0)
         {
@@ -135,7 +136,7 @@ public class CharacterMovement : MonoBehaviour
         }
     }
 
-    void LockOnMovementY()
+    void AimMovementY()
     {
         if(movementInput.y == 0)
         {
@@ -164,16 +165,6 @@ public class CharacterMovement : MonoBehaviour
         }
     }
 
-    void LookAtLockedEnemy()
-    {
-        if(LockedEnemy == null){ return; }
-
-        Vector3 enemyPos = LockedEnemy.position;
-        enemyPos.y = transform.position.y;
-
-        transform.LookAt(enemyPos, Vector3.up);
-    }
-
     public void DodgeDive()
     {
         anim.SetTrigger(AnimDiveHash);
@@ -192,7 +183,7 @@ public class CharacterMovement : MonoBehaviour
         attributes.ReduceStamina(kickCost);
     }
 
-    public void AnimDrawUndrawBow()
+    public void EquipUnequipBow()
     {
         if(isArmed)
             anim.SetTrigger(AnimUndrawBowHash);
@@ -237,66 +228,47 @@ public class CharacterMovement : MonoBehaviour
 
     public void ToggleArrow()
     {
-        if (isAiming)
+        if (isDrawn)
             arrow.SetActive(true);
         else
             arrow.SetActive(false);
     }
 
-    public void ToggleLockon()
+    public void AimInistalisation()
     {
-        LockedEnemy = FindClosestEnemy();
-        if(LockedEnemy != null)
+        anim.SetBool(AnimAimingHash, isAiming);
+        if (isAiming)
         {
-            isLocked = !isLocked;
-            anim.SetBool(AnimLockedOnHash, isLocked);
-            if(isLocked)
-            {
-                characterMovement = LockOnMovement;
-                anim.SetLayerWeight(1, 1);
-                freeLookCam.Priority = 1;
-                lockCam.Priority = 2;
-                lockCam.LookAt = LockedEnemy;
-
-            }
-            else
-            {
-                characterMovement = Movement;
-                anim.SetLayerWeight(1,0);
-                freeLookCam.Priority = 2;
-                lockCam.Priority = 1;
-                lockCam.LookAt = null;
-            }
+            characterMovement = AimMovement;
+            anim.SetLayerWeight(1, 1);
+            freeLookCam.Priority = 1;
+            aimCam.Priority = 2;
+        }
+        else
+        {
+            characterMovement = Movement;
+            anim.SetLayerWeight(1, 0);
+            freeLookCam.Priority = 2;
+            aimCam.Priority = 1;
         }
     }
 
-    Transform FindClosestEnemy()
+    void AimLook()
     {
-        Debug.Log("Finding enemy");
-        float ClosestEnemyDis = Mathf.Infinity;
-        Transform ClosestEnemy = null;
+        float mouseX = mouseInput.x * mouseSenstivity * Time.deltaTime;
+        float mouseY = mouseInput.y * mouseSenstivity * Time.deltaTime;
 
-        Collider[] Enemies = Physics.OverlapSphere(transform.position, lockonRadius, enemyLayer);
+        xRotation -= mouseY;
+        xRotation = Mathf.Clamp(xRotation, -70, 70);
 
-        foreach(Collider enemy in Enemies)
-        {
-            float enemyDis = Vector3.Distance(transform.position, enemy.transform.position);
-
-            if(enemyDis < ClosestEnemyDis)
-            {
-                ClosestEnemyDis = enemyDis;
-                ClosestEnemy = enemy.transform;
-            }
-        }
-
-        return ClosestEnemy;
+        characterRoot.transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
+        transform.Rotate(Vector3.up * mouseX);
     }
 
     void OnDrawGizmosSelected()
     {
         Gizmos.color = Color.red;   
         Gizmos.DrawWireCube(new Vector3(transform.position.x, transform.position.y - 0.25f, transform.position.z), new Vector3(0.5f, 0.5f, 0.5f));
-        Gizmos.DrawWireSphere(transform.position, lockonRadius);
     }
 
 }

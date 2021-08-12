@@ -1641,13 +1641,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5166940486636117811}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0.004856457, y: -0.06690769, z: -0.07223091, w: 0.9951294}
   m_LocalPosition: {x: 0, y: 1.427, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 6744299194353897369}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -7.693, z: -8.303}
 --- !u!1 &5190388222444046360
 GameObject:
   m_ObjectHideFlags: 0
@@ -2145,23 +2145,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cam: {fileID: 0}
   freeLookCam: {fileID: 0}
-  lockCam: {fileID: 0}
+  aimCam: {fileID: 0}
+  characterRoot: {fileID: 1215446826}
   turnSmoothTime: 0.1
   lockonMovementChangeSpeed: 5
   dodgeCost: 10
   punchCost: 10
   kickCost: 10
-  lockonRadius: 10
-  enemyLayer:
-    serializedVersion: 2
-    m_Bits: 64
   bow: {fileID: 1271627709564355778}
   disarmedBow: {fileID: 7007553110901573631}
   arrow: {fileID: 6211731669919962456}
   arrowProjectile: {fileID: 1572036002376829195, guid: ef6a5bb4091fd15488745b43015f004d, type: 3}
   arrowSpawnPoint: {fileID: 5166940486636117811}
-  arrowFireForce: 10
-  isSpritting: 0
+  arrowFireForce: 30
+  mouseSenstivity: 100
 --- !u!114 &6173322222579470631
 MonoBehaviour:
   m_ObjectHideFlags: 0

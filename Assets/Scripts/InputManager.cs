@@ -36,13 +36,19 @@ public class InputManager : MonoBehaviour
 
             controls.Player.Kick.performed += ctx => characterMovement.Kick();
 
-            controls.Player.DrawUndrawBow.performed += ctx => characterMovement.AnimDrawUndrawBow();
+            controls.Player.DrawUndrawBow.performed += ctx => characterMovement.EquipUnequipBow();
 
-            controls.Player.FireBow.started += ctx => characterMovement.IsAiming = true;
-            controls.Player.FireBow.performed += ctx => characterMovement.IsAiming = true;
-            controls.Player.FireBow.canceled += ctx => characterMovement.IsAiming = false;
+            controls.Player.FireBow.started += ctx => characterMovement.IsDrawn = true;
+            controls.Player.FireBow.performed += ctx => characterMovement.IsDrawn = true;
+            controls.Player.FireBow.canceled += ctx => characterMovement.IsDrawn = false;
 
-            controls.Player.LockOn.performed += ctx => characterMovement.ToggleLockon();
+            controls.Player.Aim.started += ctx => characterMovement.IsAiming = true;
+            controls.Player.Aim.performed += ctx => characterMovement.IsAiming = true;
+            controls.Player.Aim.canceled += ctx => characterMovement.IsAiming = false;
+
+            controls.Player.CameraMovement.started += ctx => characterMovement.MouseInput = ctx.ReadValue<Vector2>();
+            controls.Player.CameraMovement.performed += ctx => characterMovement.MouseInput = ctx.ReadValue<Vector2>();
+            controls.Player.CameraMovement.canceled += ctx => characterMovement.MouseInput = ctx.ReadValue<Vector2>();
 
             controls.Player.Escape.performed += ctx => LockUnlock();
         }

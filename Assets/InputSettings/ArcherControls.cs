@@ -83,17 +83,17 @@ public class @ArcherControls : IInputActionCollection, IDisposable
                     ""interactions"": ""Press""
                 },
                 {
-                    ""name"": ""LockOn"",
+                    ""name"": ""Escape"",
                     ""type"": ""Button"",
-                    ""id"": ""533f7455-392a-4ab1-8560-74d6a2d666a8"",
+                    ""id"": ""2722005a-5f4e-4e2d-b405-890c3ee8991a"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": ""Press""
                 },
                 {
-                    ""name"": ""Escape"",
+                    ""name"": ""Aim"",
                     ""type"": ""Button"",
-                    ""id"": ""2722005a-5f4e-4e2d-b405-890c3ee8991a"",
+                    ""id"": ""d856692e-aa35-410b-bc62-2ebcc2cd5e1c"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": ""Press""
@@ -103,7 +103,7 @@ public class @ArcherControls : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""c618816b-bbf6-4dc2-8ecc-b65b1747a8c5"",
-                    ""path"": ""<Mouse>/delta"",
+                    ""path"": ""<Pointer>/delta"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -289,23 +289,23 @@ public class @ArcherControls : IInputActionCollection, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""96718815-05cc-44b5-b87e-550a5ed5722f"",
-                    ""path"": ""<Keyboard>/tab"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""LockOn"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
                     ""id"": ""da1df8e7-d7a6-4fd2-8876-b32fa0a3b7b2"",
                     ""path"": ""<Keyboard>/escape"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Escape"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4c492c1f-9c89-4253-b658-71840fecb570"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Aim"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -324,8 +324,8 @@ public class @ArcherControls : IInputActionCollection, IDisposable
         m_Player_Kick = m_Player.FindAction("Kick", throwIfNotFound: true);
         m_Player_DrawUndrawBow = m_Player.FindAction("DrawUndrawBow", throwIfNotFound: true);
         m_Player_FireBow = m_Player.FindAction("FireBow", throwIfNotFound: true);
-        m_Player_LockOn = m_Player.FindAction("LockOn", throwIfNotFound: true);
         m_Player_Escape = m_Player.FindAction("Escape", throwIfNotFound: true);
+        m_Player_Aim = m_Player.FindAction("Aim", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -383,8 +383,8 @@ public class @ArcherControls : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_Kick;
     private readonly InputAction m_Player_DrawUndrawBow;
     private readonly InputAction m_Player_FireBow;
-    private readonly InputAction m_Player_LockOn;
     private readonly InputAction m_Player_Escape;
+    private readonly InputAction m_Player_Aim;
     public struct PlayerActions
     {
         private @ArcherControls m_Wrapper;
@@ -397,8 +397,8 @@ public class @ArcherControls : IInputActionCollection, IDisposable
         public InputAction @Kick => m_Wrapper.m_Player_Kick;
         public InputAction @DrawUndrawBow => m_Wrapper.m_Player_DrawUndrawBow;
         public InputAction @FireBow => m_Wrapper.m_Player_FireBow;
-        public InputAction @LockOn => m_Wrapper.m_Player_LockOn;
         public InputAction @Escape => m_Wrapper.m_Player_Escape;
+        public InputAction @Aim => m_Wrapper.m_Player_Aim;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -432,12 +432,12 @@ public class @ArcherControls : IInputActionCollection, IDisposable
                 @FireBow.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFireBow;
                 @FireBow.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFireBow;
                 @FireBow.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnFireBow;
-                @LockOn.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLockOn;
-                @LockOn.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLockOn;
-                @LockOn.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnLockOn;
                 @Escape.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnEscape;
                 @Escape.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnEscape;
                 @Escape.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnEscape;
+                @Aim.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAim;
+                @Aim.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAim;
+                @Aim.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAim;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -466,12 +466,12 @@ public class @ArcherControls : IInputActionCollection, IDisposable
                 @FireBow.started += instance.OnFireBow;
                 @FireBow.performed += instance.OnFireBow;
                 @FireBow.canceled += instance.OnFireBow;
-                @LockOn.started += instance.OnLockOn;
-                @LockOn.performed += instance.OnLockOn;
-                @LockOn.canceled += instance.OnLockOn;
                 @Escape.started += instance.OnEscape;
                 @Escape.performed += instance.OnEscape;
                 @Escape.canceled += instance.OnEscape;
+                @Aim.started += instance.OnAim;
+                @Aim.performed += instance.OnAim;
+                @Aim.canceled += instance.OnAim;
             }
         }
     }
@@ -486,7 +486,7 @@ public class @ArcherControls : IInputActionCollection, IDisposable
         void OnKick(InputAction.CallbackContext context);
         void OnDrawUndrawBow(InputAction.CallbackContext context);
         void OnFireBow(InputAction.CallbackContext context);
-        void OnLockOn(InputAction.CallbackContext context);
         void OnEscape(InputAction.CallbackContext context);
+        void OnAim(InputAction.CallbackContext context);
     }
 }

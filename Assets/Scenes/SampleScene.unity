@@ -1223,45 +1223,13 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1687258585}
     - target: {fileID: 878174039, guid: c672fc670ec49164ba93537412c4c936, type: 3}
-      propertyPath: lockCam
+      propertyPath: aimCam
       value: 
       objectReference: {fileID: 1301594435}
     - target: {fileID: 878174039, guid: c672fc670ec49164ba93537412c4c936, type: 3}
       propertyPath: freeLookCam
       value: 
       objectReference: {fileID: 405771300}
-    - target: {fileID: 878174039, guid: c672fc670ec49164ba93537412c4c936, type: 3}
-      propertyPath: arrowFireForce
-      value: 30
-      objectReference: {fileID: 0}
-    - target: {fileID: 1093691349821347319, guid: c672fc670ec49164ba93537412c4c936, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 0.9951294
-      objectReference: {fileID: 0}
-    - target: {fileID: 1093691349821347319, guid: c672fc670ec49164ba93537412c4c936, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0.004856457
-      objectReference: {fileID: 0}
-    - target: {fileID: 1093691349821347319, guid: c672fc670ec49164ba93537412c4c936, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0.06690769
-      objectReference: {fileID: 0}
-    - target: {fileID: 1093691349821347319, guid: c672fc670ec49164ba93537412c4c936, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0.07223091
-      objectReference: {fileID: 0}
-    - target: {fileID: 1093691349821347319, guid: c672fc670ec49164ba93537412c4c936, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1093691349821347319, guid: c672fc670ec49164ba93537412c4c936, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: -7.693
-      objectReference: {fileID: 0}
-    - target: {fileID: 1093691349821347319, guid: c672fc670ec49164ba93537412c4c936, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: -8.303
-      objectReference: {fileID: 0}
     - target: {fileID: 6173322222579470631, guid: c672fc670ec49164ba93537412c4c936, type: 3}
       propertyPath: healthSlider
       value: 
@@ -1386,7 +1354,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1125321830}
-  m_LocalRotation: {x: 0.07224513, y: 0.000000017161419, z: -0.0000000012430769, w: 0.99738693}
+  m_LocalRotation: {x: 0.07224513, y: -0.000000017161419, z: 0.0000000012430769, w: 0.99738693}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -1411,7 +1379,7 @@ GameObject:
   - component: {fileID: 1301594435}
   - component: {fileID: 1301594437}
   m_Layer: 0
-  m_Name: Lock Cam
+  m_Name: Aim Cam
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1460,7 +1428,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1301594434}
   m_LocalRotation: {x: 0.27463797, y: -0.08381183, z: 0.024094546, w: 0.957585}
-  m_LocalPosition: {x: 24.1, y: 3.7180002, z: 13.27}
+  m_LocalPosition: {x: 24.300001, y: 3.7180002, z: 14.07}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1712072568}
@@ -1563,7 +1531,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1368569368}
-  m_LocalRotation: {x: 0.09037512, y: -0.000000024844526, z: 0.000000002254553, w: 0.99590784}
+  m_LocalRotation: {x: 0.09037513, y: 0.000000001084387, z: -9.8404195e-11, w: 0.99590784}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -1744,7 +1712,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1481000395}
-  m_LocalRotation: {x: 0.054139193, y: -1e-45, z: -0, w: 0.9985334}
+  m_LocalRotation: {x: 0.054139193, y: -0, z: -0, w: 0.9985334}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -1895,7 +1863,7 @@ MonoBehaviour:
   m_BlendUpdateMethod: 1
   m_DefaultBlend:
     m_Style: 1
-    m_Time: 2
+    m_Time: 0.2
     m_CustomCurve:
       serializedVersion: 2
       m_Curve: []
@@ -1959,13 +1927,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1687258581}
-  m_LocalRotation: {x: 0.07224513, y: 0.000000034322838, z: -0.0000000024861542, w: 0.99738693}
+  m_LocalRotation: {x: 0.07224513, y: -0.000000034322838, z: 0.0000000024861542, w: 0.99738693}
   m_LocalPosition: {x: 23.6, y: 4.25, z: 12.27}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 20.146, y: 195.09, z: 0.001}
+  m_LocalEulerAnglesHint: {x: -0.4, y: 360, z: 0}
 --- !u!114 &1687258586
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2008,7 +1976,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1712072568}
   - component: {fileID: 1712072571}
-  - component: {fileID: 1712072570}
   - component: {fileID: 1712072569}
   m_Layer: 0
   m_Name: cm
@@ -2044,7 +2011,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Damping: {x: 0.2, y: 0.5, z: 0.3}
-  ShoulderOffset: {x: 0.5, y: -0.2, z: -1}
+  ShoulderOffset: {x: 0.7, y: -0.2, z: -0.2}
   VerticalArmLength: 0.4
   CameraSide: 1
   CameraDistance: 2
@@ -2053,33 +2020,6 @@ MonoBehaviour:
     m_Bits: 0
   IgnoreTag: 
   CameraRadius: 0.2
---- !u!114 &1712072570
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1712072567}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4044717213e31446939f7bd49c896ea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_TrackedObjectOffset: {x: 0, y: 0, z: 0}
-  m_LookaheadTime: 0
-  m_LookaheadSmoothing: 0
-  m_LookaheadIgnoreY: 0
-  m_HorizontalDamping: 0.5
-  m_VerticalDamping: 0.5
-  m_ScreenX: 0.5
-  m_ScreenY: 0.5
-  m_DeadZoneWidth: 0
-  m_DeadZoneHeight: 0
-  m_SoftZoneWidth: 0.8
-  m_SoftZoneHeight: 0.8
-  m_BiasX: 0
-  m_BiasY: 0
-  m_CenterOnActivate: 1
 --- !u!114 &1712072571
 MonoBehaviour:
   m_ObjectHideFlags: 3
