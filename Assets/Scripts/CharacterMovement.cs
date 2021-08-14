@@ -22,6 +22,7 @@ public class CharacterMovement : MonoBehaviour
     [SerializeField] float kickCost = 10f;
 
     [Header("Equipment")]
+    [SerializeField] LayerMask hitLayer;
     [SerializeField] GameObject bow;
     [SerializeField] GameObject disarmedBow;
     [SerializeField] GameObject arrow;
@@ -210,13 +211,21 @@ public class CharacterMovement : MonoBehaviour
 
     public void FireArrow()
     {
-        Vector3 direction = new Vector3(movementInput.x, 0, movementInput.y);
+        Vector3 direction = new Vector3(movementInput.x, 0f, movementInput.y);
         GameObject copy;
 
-        if (direction.magnitude >= 0.1f)
+        Vector2 screenCentrePoint = new Vector2(Screen.width / 2f, Screen.height / 2);
+        Ray ray = Camera.main.ScreenPointToRay(screenCentrePoint);
+        Physics.Raycast(ray, out RaycastHit raycastHit, 999f, hitLayer);
+
+        if (direction.magnitude >= 0.1f && !isAiming)
             copy = Instantiate(arrowProjectile, arrowSpawnPoint.transform.position, arrowSpawnPoint.transform.rotation);
         else
-            copy = Instantiate(arrowProjectile, arrowSpawnPoint.transform.position, cam.transform.rotation);
+        {
+            copy = Instantiate(arrowProjectile, arrowSpawnPoint.transform.position, Quaternion.identity);
+            copy.transform.LookAt(raycastHit.point);
+        }
+
 
         Rigidbody rb = copy.GetComponent<Rigidbody>();
 
