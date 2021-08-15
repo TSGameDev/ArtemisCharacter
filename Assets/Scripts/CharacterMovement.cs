@@ -9,55 +9,55 @@ using Cinemachine;
 public class CharacterMovement : MonoBehaviour
 {
     [Header("Movement Settings")] [Space(10)]
-    [SerializeField] Transform cam;
-    [SerializeField] CinemachineFreeLook freeLookCam;
-    [SerializeField] CinemachineVirtualCamera aimCam;
-    [SerializeField] Transform characterRoot;
-    [SerializeField] float turnSmoothTime = 0.1f;
-    [SerializeField] float lockonMovementChangeSpeed = 100f;
+    [SerializeField] private Transform cam;
+    [SerializeField] private CinemachineFreeLook freeLookCam;
+    [SerializeField] private CinemachineVirtualCamera aimCam;
+    [SerializeField] private Transform characterRoot;
+    [SerializeField] private float turnSmoothTime = 0.1f;
+    [SerializeField] private float lockonMovementChangeSpeed = 100f;
 
     [Header("Stamina Costs")]
-    [SerializeField] float dodgeCost = 10f;
-    [SerializeField] float punchCost = 10f;
-    [SerializeField] float kickCost = 10f;
+    [SerializeField] private float dodgeCost = 10f;
+    [SerializeField] private float punchCost = 10f;
+    [SerializeField] private float kickCost = 10f;
 
     [Header("Equipment")]
-    [SerializeField] LayerMask hitLayer;
-    [SerializeField] GameObject bow;
-    [SerializeField] GameObject disarmedBow;
-    [SerializeField] GameObject arrow;
-    [SerializeField] GameObject arrowProjectile;
-    [SerializeField] GameObject arrowSpawnPoint;
-    [SerializeField] float arrowFireForce = 1000f;
+    [SerializeField] private LayerMask hitLayer;
+    [SerializeField] private GameObject bow;
+    [SerializeField] private GameObject disarmedBow;
+    [SerializeField] private GameObject arrow;
+    [SerializeField] private GameObject arrowProjectile;
+    [SerializeField] private GameObject arrowSpawnPoint;
+    [SerializeField] private float arrowFireForce = 1000f;
 
-    Vector2 movementInput;
+    private Vector2 movementInput;
     public Vector2 MovementInput{ set{ movementInput = value; } }
 
-    bool isSpritting;
+    private bool isSpritting;
     public bool IsSpritting { set{ isSpritting = value; } }
 
-    bool isDrawn;
+    [SerializeField]private bool isDrawn;
     public bool IsDrawn{ set{ isDrawn = value; anim.SetBool(AnimFireArrowHash, isDrawn); } }
 
-    bool isAiming;
-    public bool IsAiming { set{ isAiming = value; AimInistalisation(); } }
+    private bool isAiming;
+    public bool IsAiming { set{ isAiming = value; AimInistalisation(); anim.SetBool(AnimAimingHash, isAiming); } }
 
-    [SerializeField] float mouseSenstivity = 100f;
+    [SerializeField] private float mouseSenstivity = 50f;
 
-    float xRotation = 0f;
+    private float xRotation = 0f;
 
-    Vector2 mouseInput;
+    private Vector2 mouseInput;
     public Vector2 MouseInput { set { mouseInput = value; if (isAiming == true) { AimLook(); } } }
 
-    Action characterMovement;
+    private Action characterMovement;
 
-    Animator anim;
-    Attributes attributes;
-    bool isArmed = true;
-    float turnSmoothVelocity;
-    int LockMovementMax = 1;
-    int LockMovementMin = -1;
-    int LockMovementNeutral = 0;
+    private Animator anim;
+    private Attributes attributes;
+    private bool isArmed = true;
+    private float turnSmoothVelocity;
+    private int LockMovementMax = 1;
+    private int LockMovementMin = -1;
+    private int LockMovementNeutral = 0;
 
     #region Anim Hashes
 
@@ -72,7 +72,7 @@ public class CharacterMovement : MonoBehaviour
     int AnimDrawBowHash = Animator.StringToHash("DrawBow");
     int AnimUndrawBowHash = Animator.StringToHash("UndrawBow");
     int AnimFireArrowHash = Animator.StringToHash("FireArrow");
-    int AnimAimingHash = Animator.StringToHash("Aiming");
+    int AnimAimingHash = Animator.StringToHash("isAiming");
 
     #endregion
 
@@ -106,12 +106,6 @@ public class CharacterMovement : MonoBehaviour
         {
             anim.SetBool(AnimWalkHash, false);
             anim.SetBool(AnimRunHash, false);
-
-            if(isDrawn == true)
-            {
-                float aimAngle = Mathf.SmoothDampAngle(transform.eulerAngles.y, freeLookCam.m_XAxis.Value, ref turnSmoothVelocity, turnSmoothTime);
-                transform.rotation = Quaternion.Euler(0f, aimAngle, 0f);
-            }
         }
     }
 
@@ -211,21 +205,10 @@ public class CharacterMovement : MonoBehaviour
 
     public void FireArrow()
     {
-        Vector3 direction = new Vector3(movementInput.x, 0f, movementInput.y);
         GameObject copy;
 
-        Vector2 screenCentrePoint = new Vector2(Screen.width / 2f, Screen.height / 2);
-        Ray ray = Camera.main.ScreenPointToRay(screenCentrePoint);
-        Physics.Raycast(ray, out RaycastHit raycastHit, 999f, hitLayer);
-
-        if (direction.magnitude >= 0.1f && !isAiming)
-            copy = Instantiate(arrowProjectile, arrowSpawnPoint.transform.position, arrowSpawnPoint.transform.rotation);
-        else
-        {
-            copy = Instantiate(arrowProjectile, arrowSpawnPoint.transform.position, Quaternion.identity);
-            copy.transform.LookAt(raycastHit.point);
-        }
-
+        copy = Instantiate(arrowProjectile, arrowSpawnPoint.transform.position, Quaternion.identity);
+        copy.transform.LookAt(ScreenCentrePointRay().point);
 
         Rigidbody rb = copy.GetComponent<Rigidbody>();
 
@@ -237,7 +220,7 @@ public class CharacterMovement : MonoBehaviour
 
     public void ToggleArrow()
     {
-        if (isDrawn)
+        if (isDrawn && isAiming)
             arrow.SetActive(true);
         else
             arrow.SetActive(false);
@@ -245,9 +228,13 @@ public class CharacterMovement : MonoBehaviour
 
     public void AimInistalisation()
     {
-        anim.SetBool(AnimAimingHash, isAiming);
         if (isAiming)
         {
+            Vector3 aimPos = ScreenCentrePointRay().point;
+            characterRoot.transform.LookAt(aimPos);
+            aimPos.y = transform.position.y;
+            transform.LookAt(aimPos);
+
             characterMovement = AimMovement;
             anim.SetLayerWeight(1, 1);
             freeLookCam.Priority = 1;
@@ -255,6 +242,7 @@ public class CharacterMovement : MonoBehaviour
         }
         else
         {
+            ToggleArrow();
             characterMovement = Movement;
             anim.SetLayerWeight(1, 0);
             freeLookCam.Priority = 2;
@@ -272,6 +260,14 @@ public class CharacterMovement : MonoBehaviour
 
         characterRoot.transform.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
         transform.Rotate(Vector3.up * mouseX);
+    }
+
+    RaycastHit ScreenCentrePointRay()
+    {
+        Vector2 screenCentrePoint = new Vector2(Screen.width / 2f, Screen.height / 2);
+        Ray ray = Camera.main.ScreenPointToRay(screenCentrePoint);
+        Physics.Raycast(ray, out RaycastHit raycastHit, 999f, hitLayer);
+        return raycastHit;
     }
 
     void OnDrawGizmosSelected()
