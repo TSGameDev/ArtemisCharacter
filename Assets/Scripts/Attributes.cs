@@ -22,6 +22,9 @@ public class Attributes : MonoBehaviour
     int AnimHitHash = Animator.StringToHash("Hit");
     int AnimHitHeadHash = Animator.StringToHash("HitHead");
 
+    string AnimDeathForward = "DeathForward";
+    string AnimDeathBackward = "DeathBackward";
+
     #endregion
 
     void Awake()
@@ -39,20 +42,36 @@ public class Attributes : MonoBehaviour
     public void TakeDamage(float damage)
     {
         healthSlider.value -= damage;
+        int randomAnim = Random.Range(1, 2);
 
-        int randomAnim = Random.Range(1,2);
-
-        switch(randomAnim)
+        if (healthSlider.value <= 0)
         {
-            case 1:
-                anim.SetTrigger(AnimHitHash);
-                break;
-            case 2:
-                anim.SetTrigger(AnimHitHeadHash);
-                break;
-            default:
-                anim.SetTrigger(AnimHitHash);
-                break;
+            switch (randomAnim)
+            {
+                case 1:
+                    anim.Play(AnimDeathBackward);
+                    break;
+                case 2:
+                default:
+                    anim.Play(AnimDeathForward);
+                    break;
+                
+            }
+        }
+        else
+        {
+            switch (randomAnim)
+            {
+                case 1:
+                    anim.SetTrigger(AnimHitHash);
+                    break;
+                case 2:
+                    anim.SetTrigger(AnimHitHeadHash);
+                    break;
+                default:
+                    anim.SetTrigger(AnimHitHash);
+                    break;
+            }
         }
     }
 
