@@ -2150,20 +2150,21 @@ MonoBehaviour:
   characterRoot: {fileID: 1215446826}
   turnSmoothTime: 0.1
   lockonMovementChangeSpeed: 5
+  aimSensitivity: 50
   dodgeCost: 10
   punchCost: 10
   kickCost: 10
   hitLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 65
   bow: {fileID: 1271627709564355778}
   disarmedBow: {fileID: 7007553110901573631}
   arrow: {fileID: 6211731669919962456}
   arrowProjectile: {fileID: 1572036002376829195, guid: ef6a5bb4091fd15488745b43015f004d, type: 3}
   arrowSpawnPoint: {fileID: 5166940486636117811}
-  arrowFireForce: 30
-  isDrawn: 0
-  mouseSenstivity: 100
+  arrowForceMax: 200
+  arrowForceMin: 0
+  powerTxt: {fileID: 0}
 --- !u!114 &6173322222579470631
 MonoBehaviour:
   m_ObjectHideFlags: 0

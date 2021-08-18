@@ -97,6 +97,14 @@ public class @ArcherControls : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": ""Press""
+                },
+                {
+                    ""name"": ""PowerScale"",
+                    ""type"": ""Value"",
+                    ""id"": ""d43ea7a6-d5f9-4f25-8843-b5334964aa2e"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": ""Press""
                 }
             ],
             ""bindings"": [
@@ -308,6 +316,17 @@ public class @ArcherControls : IInputActionCollection, IDisposable
                     ""action"": ""Aim"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""55158575-c12b-48a8-aef4-9c809f17d928"",
+                    ""path"": ""<Mouse>/scroll"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PowerScale"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -326,6 +345,7 @@ public class @ArcherControls : IInputActionCollection, IDisposable
         m_Player_FireBow = m_Player.FindAction("FireBow", throwIfNotFound: true);
         m_Player_Escape = m_Player.FindAction("Escape", throwIfNotFound: true);
         m_Player_Aim = m_Player.FindAction("Aim", throwIfNotFound: true);
+        m_Player_PowerScale = m_Player.FindAction("PowerScale", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -385,6 +405,7 @@ public class @ArcherControls : IInputActionCollection, IDisposable
     private readonly InputAction m_Player_FireBow;
     private readonly InputAction m_Player_Escape;
     private readonly InputAction m_Player_Aim;
+    private readonly InputAction m_Player_PowerScale;
     public struct PlayerActions
     {
         private @ArcherControls m_Wrapper;
@@ -399,6 +420,7 @@ public class @ArcherControls : IInputActionCollection, IDisposable
         public InputAction @FireBow => m_Wrapper.m_Player_FireBow;
         public InputAction @Escape => m_Wrapper.m_Player_Escape;
         public InputAction @Aim => m_Wrapper.m_Player_Aim;
+        public InputAction @PowerScale => m_Wrapper.m_Player_PowerScale;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -438,6 +460,9 @@ public class @ArcherControls : IInputActionCollection, IDisposable
                 @Aim.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAim;
                 @Aim.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAim;
                 @Aim.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnAim;
+                @PowerScale.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPowerScale;
+                @PowerScale.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPowerScale;
+                @PowerScale.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnPowerScale;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -472,6 +497,9 @@ public class @ArcherControls : IInputActionCollection, IDisposable
                 @Aim.started += instance.OnAim;
                 @Aim.performed += instance.OnAim;
                 @Aim.canceled += instance.OnAim;
+                @PowerScale.started += instance.OnPowerScale;
+                @PowerScale.performed += instance.OnPowerScale;
+                @PowerScale.canceled += instance.OnPowerScale;
             }
         }
     }
@@ -488,5 +516,6 @@ public class @ArcherControls : IInputActionCollection, IDisposable
         void OnFireBow(InputAction.CallbackContext context);
         void OnEscape(InputAction.CallbackContext context);
         void OnAim(InputAction.CallbackContext context);
+        void OnPowerScale(InputAction.CallbackContext context);
     }
 }

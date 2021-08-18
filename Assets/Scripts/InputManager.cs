@@ -51,6 +51,8 @@ public class InputManager : MonoBehaviour
             controls.Player.CameraMovement.canceled += ctx => characterMovement.MouseInput = ctx.ReadValue<Vector2>();
 
             controls.Player.Escape.performed += ctx => LockUnlock();
+
+            controls.Player.PowerScale.performed += ctx => characterMovement.PowerInput = (int)ctx.ReadValue<Vector2>().y;
         }
         controls.Enable();
     }
