@@ -53,11 +53,21 @@ public class CharacterMovement : MonoBehaviour
     [Tooltip("The min power of the players shot")]
     [SerializeField] private int arrowForceMin;
 
-
     [Header("UI Settings")]
     [Tooltip("The text element for displaying current power")]
     [SerializeField] private TextMeshProUGUI powerTxt;
 
+    [Header("SFX")]
+    [SerializeField] private AudioSource footStepSource;
+    [SerializeField] private AudioSource bowSource;
+
+    [Tooltip("The array/collection of footstep SFX to be played at random when play is walking on stone")]
+    [SerializeField] private AudioClip[] stoneFootstepSfx;
+    [Tooltip("The SFX of the string being pulledback")]
+    [SerializeField] private AudioClip bowdrawingSfx;
+    [Tooltip("The SFX of the string being released")]
+    [SerializeField] private AudioClip bowreleasingSfx;
+    
     #region Get-Setters
 
     //Setter for the WASD movement input from the input manager
@@ -337,8 +347,8 @@ public class CharacterMovement : MonoBehaviour
     //handles the aiming logic
     void AimLook()
     {
-        float mouseX = mouseInput.x * aimSensitivity * Time.deltaTime;
-        float mouseY = mouseInput.y * aimSensitivity * Time.deltaTime;
+        float mouseX = mouseInput.x * Time.deltaTime * aimSensitivity;
+        float mouseY = mouseInput.y * Time.deltaTime * aimSensitivity;
 
         xRotation -= mouseY;
         xRotation = Mathf.Clamp(xRotation, -70, 70);
@@ -358,6 +368,33 @@ public class CharacterMovement : MonoBehaviour
             arrowFireForce = Mathf.Clamp(arrowFireForce - 5, arrowForceMin, arrowForceMax);
         }
         powerTxt.text = arrowFireForce.ToString();
+    }
+
+    //handles the setting and playing of a footstep soundeffect
+    public void FootStepSFX()
+    {
+        if (footStepSource.isPlaying == true) { footStepSource.Stop(); }
+
+        int ranNum = UnityEngine.Random.Range(1, stoneFootstepSfx.Length);
+        footStepSource.clip = stoneFootstepSfx[ranNum];
+        footStepSource.Play();
+    }
+
+    public void ArrowFireSFX(int IsBeingDrawn)
+    {
+        if (bowSource.isPlaying == true) { bowSource.Stop(); }
+
+        switch(IsBeingDrawn)
+        {
+            case 1:
+                bowSource.clip = bowdrawingSfx;
+                break;
+            case 2:
+                bowSource.clip = bowreleasingSfx;
+                break;
+        }
+
+        bowSource.Play();
     }
 
     //casts a ray from the centre of the screen and returns the hit data

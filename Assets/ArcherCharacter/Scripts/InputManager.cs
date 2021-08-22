@@ -46,9 +46,7 @@ public class InputManager : MonoBehaviour
             controls.Player.Aim.performed += ctx => characterMovement.IsAiming = true;
             controls.Player.Aim.canceled += ctx => characterMovement.IsAiming = false;
 
-            controls.Player.CameraMovement.started += ctx => characterMovement.MouseInput = ctx.ReadValue<Vector2>();
             controls.Player.CameraMovement.performed += ctx => characterMovement.MouseInput = ctx.ReadValue<Vector2>();
-            controls.Player.CameraMovement.canceled += ctx => characterMovement.MouseInput = ctx.ReadValue<Vector2>();
 
             controls.Player.Escape.performed += ctx => LockUnlock();
 

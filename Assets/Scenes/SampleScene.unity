@@ -1612,10 +1612,6 @@ PrefabInstance:
       propertyPath: freeLookCam
       value: 
       objectReference: {fileID: 405771300}
-    - target: {fileID: 878174039, guid: c672fc670ec49164ba93537412c4c936, type: 3}
-      propertyPath: arrowForceMin
-      value: 50
-      objectReference: {fileID: 0}
     - target: {fileID: 6173322222579470631, guid: c672fc670ec49164ba93537412c4c936, type: 3}
       propertyPath: healthSlider
       value: 
