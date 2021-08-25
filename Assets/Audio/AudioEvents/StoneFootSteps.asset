@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41ad4b782810e184aab96b5d6439dfa7, type: 3}
+  m_Name: StoneFootSteps
+  m_EditorClassIdentifier: 
+  clips:
+  - {fileID: 8300000, guid: 3693ebecff58b694ebc00f97310beec3, type: 3}
+  - {fileID: 8300000, guid: 0f98fcf673a0c7f41864acd298a1d234, type: 3}
+  - {fileID: 8300000, guid: 941b1f2622cc9314ab867d55319f63a9, type: 3}
+  - {fileID: 8300000, guid: 1665267443a866849a1ff63f17b068b2, type: 3}
+  - {fileID: 8300000, guid: f21586d9634f1ac4c92100603c09842c, type: 3}
+  - {fileID: 8300000, guid: 8f33bb6e1c8453349ad54ffaca329d8d, type: 3}
+  - {fileID: 8300000, guid: b506980aeb8b48e4395b905da6a7fa60, type: 3}
+  - {fileID: 8300000, guid: 82db64c03c7bdd649a0241c32ea10489, type: 3}
+  - {fileID: 8300000, guid: 27fe24ea3da7ae34fa36b69ab2c852ef, type: 3}
+  - {fileID: 8300000, guid: 55ff476b142306f4a97bae2991fb80b4, type: 3}
+  minPitch: 0.9
+  maxPitch: 1.1
+  minVolume: 0.9
+  maxVolume: 1.1

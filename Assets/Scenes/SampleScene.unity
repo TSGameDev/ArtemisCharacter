@@ -1605,21 +1605,9 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1301594435}
     - target: {fileID: 878174039, guid: c672fc670ec49164ba93537412c4c936, type: 3}
-      propertyPath: powerTxt
-      value: 
-      objectReference: {fileID: 5747784}
-    - target: {fileID: 878174039, guid: c672fc670ec49164ba93537412c4c936, type: 3}
       propertyPath: freeLookCam
       value: 
       objectReference: {fileID: 405771300}
-    - target: {fileID: 6173322222579470631, guid: c672fc670ec49164ba93537412c4c936, type: 3}
-      propertyPath: healthSlider
-      value: 
-      objectReference: {fileID: 583539190}
-    - target: {fileID: 6173322222579470631, guid: c672fc670ec49164ba93537412c4c936, type: 3}
-      propertyPath: staminaSlider
-      value: 
-      objectReference: {fileID: 2081804950}
     - target: {fileID: 6256415564896048419, guid: c672fc670ec49164ba93537412c4c936, type: 3}
       propertyPath: m_Name
       value: Erika
@@ -1668,6 +1656,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7697585782774962942, guid: c672fc670ec49164ba93537412c4c936, type: 3}
+      propertyPath: health
+      value: 
+      objectReference: {fileID: 583539190}
+    - target: {fileID: 7697585782774962942, guid: c672fc670ec49164ba93537412c4c936, type: 3}
+      propertyPath: stamina
+      value: 
+      objectReference: {fileID: 2081804950}
+    - target: {fileID: 7697585782774962942, guid: c672fc670ec49164ba93537412c4c936, type: 3}
+      propertyPath: powerTxt
+      value: 
+      objectReference: {fileID: 5747784}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c672fc670ec49164ba93537412c4c936, type: 3}
 --- !u!4 &926994819 stripped
@@ -1918,7 +1918,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1368569368}
-  m_LocalRotation: {x: 0.09037514, y: 0.000000006414522, z: -5.820953e-10, w: 0.99590784}
+  m_LocalRotation: {x: 0.09037512, y: 0.000000024844526, z: -0.000000002254553, w: 0.99590784}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:

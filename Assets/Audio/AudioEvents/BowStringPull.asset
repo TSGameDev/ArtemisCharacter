@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41ad4b782810e184aab96b5d6439dfa7, type: 3}
+  m_Name: BowStringPull
+  m_EditorClassIdentifier: 
+  clips:
+  - {fileID: 8300000, guid: b7f52f1e6921f5842a950bccc3734163, type: 3}
+  - {fileID: 8300000, guid: 8464e2d1a75243544b69cac42eb6d049, type: 3}
+  - {fileID: 8300000, guid: 51c60ba1b25cb6146af82c76ed7dde16, type: 3}
+  - {fileID: 8300000, guid: e18491e1f82f56041b924d6ac5e78bad, type: 3}
+  - {fileID: 8300000, guid: fa00d6c39ce362549bb73152c0f03f48, type: 3}
+  - {fileID: 8300000, guid: 02444d358cbd75f4080ef7852867d6ea, type: 3}
+  - {fileID: 8300000, guid: d12f6320a4264984ca3a64dbf173ff7c, type: 3}
+  - {fileID: 8300000, guid: 4e9b80645f1fdc74eaf54ea385e6b063, type: 3}
+  - {fileID: 8300000, guid: 3991addd613d84543ac07e84ad626a4c, type: 3}
+  - {fileID: 8300000, guid: 86c506cb953f3d14b98438cb99d1d658, type: 3}
+  - {fileID: 8300000, guid: 546776112212fe14f84cbd0b1ac282ca, type: 3}
+  - {fileID: 8300000, guid: c63d99e27637321479e5d2b7e46407fd, type: 3}
+  - {fileID: 8300000, guid: df61dc6639f9ee548a25b32aea6a472e, type: 3}
+  - {fileID: 8300000, guid: 97303d57d588aa445b940a7c3091f58f, type: 3}
+  - {fileID: 8300000, guid: 119d975c25e05db4cb48ffc38385340f, type: 3}
+  minPitch: 0.9
+  maxPitch: 1.1
+  minVolume: 0.9
+  maxVolume: 1.1

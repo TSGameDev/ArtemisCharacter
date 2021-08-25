@@ -2059,6 +2059,8 @@ GameObject:
   - component: {fileID: 1613455144}
   - component: {fileID: 134349646}
   - component: {fileID: 1022006330}
+  - component: {fileID: 6470731542247498957}
+  - component: {fileID: 7697585782774962942}
   m_Layer: 7
   m_Name: Erika
   m_TagString: Untagged
@@ -2166,22 +2168,6 @@ MonoBehaviour:
   arrowSpawnPoint: {fileID: 5166940486636117811}
   arrowForceMax: 200
   arrowForceMin: 50
-  powerTxt: {fileID: 0}
-  footStepSource: {fileID: 134349646}
-  bowSource: {fileID: 1022006330}
-  stoneFootstepSfx:
-  - {fileID: 8300000, guid: 55ff476b142306f4a97bae2991fb80b4, type: 3}
-  - {fileID: 8300000, guid: 3693ebecff58b694ebc00f97310beec3, type: 3}
-  - {fileID: 8300000, guid: 0f98fcf673a0c7f41864acd298a1d234, type: 3}
-  - {fileID: 8300000, guid: 941b1f2622cc9314ab867d55319f63a9, type: 3}
-  - {fileID: 8300000, guid: 1665267443a866849a1ff63f17b068b2, type: 3}
-  - {fileID: 8300000, guid: f21586d9634f1ac4c92100603c09842c, type: 3}
-  - {fileID: 8300000, guid: 8f33bb6e1c8453349ad54ffaca329d8d, type: 3}
-  - {fileID: 8300000, guid: b506980aeb8b48e4395b905da6a7fa60, type: 3}
-  - {fileID: 8300000, guid: 82db64c03c7bdd649a0241c32ea10489, type: 3}
-  - {fileID: 8300000, guid: 27fe24ea3da7ae34fa36b69ab2c852ef, type: 3}
-  bowdrawingSfx: {fileID: 8300000, guid: 8464e2d1a75243544b69cac42eb6d049, type: 3}
-  bowreleasingSfx: {fileID: 8300000, guid: c045775680b326143a4a75a28d9c72ff, type: 3}
   dodgeActionID: 2
   punchActionID: 0
   kickActionID: 1
@@ -2199,15 +2185,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9dcff89acc6cf34fbad4dfddf342339, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthSlider: {fileID: 0}
+  currentHealth: 0
   healthMax: 100
-  staminaSlider: {fileID: 0}
+  currentStamina: 0
   staminaMax: 100
   sprittingStaminaConsumption: 10
   staminaRegenRate: 10
-  enemyLayer:
-    serializedVersion: 2
-    m_Bits: 64
 --- !u!54 &1613455144
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2416,6 +2399,38 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &6470731542247498957
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6256415564896048419}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 506ebe54ba9ae804a8b396e117d254ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  footstepSource: {fileID: 134349646}
+  bowSource: {fileID: 1022006330}
+  stoneFootstepSFX: {fileID: 11400000, guid: 1dd8b19b24f392b4ca51f06927d92877, type: 2}
+  bowDrawnSFX: {fileID: 11400000, guid: f395ae21a12dd914f937f6806a2c66a3, type: 2}
+  bowReleasedSFX: {fileID: 11400000, guid: 23bf15e7b37783746acf12aa5ca69a9c, type: 2}
+--- !u!114 &7697585782774962942
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6256415564896048419}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 55cb973d2eaa0c34b9b3d79b125623bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: {fileID: 0}
+  stamina: {fileID: 0}
+  powerTxt: {fileID: 0}
 --- !u!1 &6328788426149383794
 GameObject:
   m_ObjectHideFlags: 0

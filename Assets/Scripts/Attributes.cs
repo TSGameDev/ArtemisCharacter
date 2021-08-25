@@ -3,20 +3,21 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(Animator))]
 public class Attributes : MonoBehaviour
 {
-    [Header("Health & Stamina")][Space(10)]
-    [SerializeField] Slider healthSlider;
-    [SerializeField] float healthMax = 100f;
-    [SerializeField] Slider staminaSlider;
-    [SerializeField] float staminaMax = 100f;
+    [Header("Health & Stamina")]
+    [Space(10)]
+    [SerializeField] int currentHealth;
+    [SerializeField] int healthMax = 100;
+    [SerializeField] float currentStamina;
+    [SerializeField] int staminaMax = 100;
 
     [Header("Stamina Rates")]
     [SerializeField] float sprittingStaminaConsumption = 10f;
     [SerializeField] float staminaRegenRate = 10f;
 
     Animator anim;
+    UIHandler UI;
 
     #region Animator Hashes
 
@@ -27,21 +28,22 @@ public class Attributes : MonoBehaviour
 
     void Awake()
     {
-        healthSlider.maxValue = healthMax;
-        staminaSlider.maxValue = staminaMax;
-        healthSlider.minValue = 0;
-        staminaSlider.minValue = 0;
-        healthSlider.value = healthSlider.maxValue;
-        staminaSlider.value = staminaSlider.maxValue;
-
         anim = GetComponent<Animator>();
+        UI = GetComponent<UIHandler>();
+
+        currentHealth = healthMax;
+        currentStamina = staminaMax;
+
+        UI.SetHealth(currentHealth, healthMax);
+        UI.SetStamina(currentStamina, staminaMax);
     }
 
-    public void TakeDamage(float damage)
+    public void TakeDamage(int damage)
     {
-        healthSlider.value -= damage;
+        currentHealth -= damage;
+        UI.SetHealth(currentHealth);
 
-        if (healthSlider.value <= 0)
+        if (currentHealth <= 0)
             anim.SetTrigger(AnimDeadHash);
         else
             anim.SetTrigger(AnimDamageHash);
@@ -49,24 +51,27 @@ public class Attributes : MonoBehaviour
 
     public void ReduceStamina(float staminaDamage)
     {
-        staminaSlider.value -= staminaDamage;
+        currentStamina -= staminaDamage;
+        UI.SetStamina(currentStamina);
     }
 
     public bool Run()
     {
-        if(staminaSlider.value <= Mathf.Epsilon)
+        if(currentStamina <= Mathf.Epsilon)
         {
             return false;
         }
         else
         {
-            staminaSlider.value -= sprittingStaminaConsumption * Time.deltaTime;
+            currentStamina -= sprittingStaminaConsumption * Time.deltaTime;
+            UI.SetStamina(currentStamina);
             return true;
         }
     }
 
     public void StaminaRegen()
     {
-        staminaSlider.value += staminaRegenRate * Time.deltaTime;
+        currentStamina += staminaRegenRate * Time.deltaTime;
+        UI.SetStamina(currentStamina);
     }
 }

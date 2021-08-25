@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 41ad4b782810e184aab96b5d6439dfa7, type: 3}
+  m_Name: BowStringRelease
+  m_EditorClassIdentifier: 
+  clips:
+  - {fileID: 8300000, guid: c045775680b326143a4a75a28d9c72ff, type: 3}
+  - {fileID: 8300000, guid: f22e8863306fc4942ad63374eb156762, type: 3}
+  - {fileID: 8300000, guid: f8e848fb65c2f8249bbbf729eea9e3a8, type: 3}
+  - {fileID: 8300000, guid: 4f1bcfd8b1d59374ea8edae910984d0a, type: 3}
+  - {fileID: 8300000, guid: 8bf0cba2a2990bb459d1c412d1e7466e, type: 3}
+  - {fileID: 8300000, guid: c6c7de8412ed60743b2042687dfb0aa1, type: 3}
+  - {fileID: 8300000, guid: d6db976b2b47bc841898dc8afda77e97, type: 3}
+  - {fileID: 8300000, guid: 7ba55bd45898d2042ae369a5133dfe85, type: 3}
+  - {fileID: 8300000, guid: b37db03e52a72e546a402482730bf776, type: 3}
+  - {fileID: 8300000, guid: feed3dd4011578d47875a7303d5ea975, type: 3}
+  - {fileID: 8300000, guid: 54b4f3b03b856944ba487de6965b84ae, type: 3}
+  - {fileID: 8300000, guid: 6f05051f698b2d549bdd804f86e88600, type: 3}
+  - {fileID: 8300000, guid: cbc6c7473818c6941b38d78fb0c94232, type: 3}
+  - {fileID: 8300000, guid: e36de0c097e68764681b2d881a4d1d1b, type: 3}
+  - {fileID: 8300000, guid: efce9d37037e7d447b6a56e66f0cd5e9, type: 3}
+  minPitch: 0.9
+  maxPitch: 1.1
+  minVolume: 0.9
+  maxVolume: 1.1

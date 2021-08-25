@@ -7,6 +7,7 @@ using TMPro;
 
 [RequireComponent(typeof(Animator))]
 [RequireComponent(typeof(Attributes))]
+[RequireComponent(typeof(UIHandler))]
 public class CharacterMovement : MonoBehaviour
 {
     [Header("Cameras")] [Space(10)]
@@ -53,20 +54,6 @@ public class CharacterMovement : MonoBehaviour
     [Tooltip("The min power of the players shot")]
     [SerializeField] private int arrowForceMin;
 
-    [Header("UI Settings")]
-    [Tooltip("The text element for displaying current power")]
-    [SerializeField] private TextMeshProUGUI powerTxt;
-
-    [Header("SFX")]
-    [SerializeField] private AudioSource footStepSource;
-    [SerializeField] private AudioSource bowSource;
-    [Tooltip("The array/collection of footstep SFX to be played at random when play is walking on stone")]
-    [SerializeField] private AudioClip[] stoneFootstepSfx;
-    [Tooltip("The SFX of the string being pulledback")]
-    [SerializeField] private AudioClip bowdrawingSfx;
-    [Tooltip("The SFX of the string being released")]
-    [SerializeField] private AudioClip bowreleasingSfx;
-
     [Header("Animations")]
     [SerializeField] private int dodgeActionID;
     [SerializeField] private int punchActionID;
@@ -107,8 +94,10 @@ public class CharacterMovement : MonoBehaviour
     private Action characterMovement;
     //refernece to the players animator
     private Animator anim;
-    //reference ot the attributes script
+    //reference ot the attributes class
     private Attributes attributes;
+    //reference to the UI handlers class
+    private UIHandler UI;
     //bool for keeping track of if the player if currently got a bow equiped or not
     private bool isArmed = true;
     //float to be used as a refence to store the current velocity of the players turning when in orbial movement style
@@ -120,7 +109,7 @@ public class CharacterMovement : MonoBehaviour
     private int aimMovementMin = -1;
     private int aimMovementNeutral = 0;
     //the current force behind the arrow
-    private float arrowFireForce = 1000f;
+    private int arrowFireForce = 100;
 
     #endregion
 
@@ -145,6 +134,7 @@ public class CharacterMovement : MonoBehaviour
         //gathering required references and setting the movement delegate to the default orbital movement style
         anim = GetComponent<Animator>();
         attributes = GetComponent<Attributes>();
+        UI = GetComponent<UIHandler>();
         characterMovement = Movement;
         PowerScale();
     }
@@ -380,34 +370,7 @@ public class CharacterMovement : MonoBehaviour
         {
             arrowFireForce = Mathf.Clamp(arrowFireForce - 5, arrowForceMin, arrowForceMax);
         }
-        powerTxt.text = arrowFireForce.ToString();
-    }
-
-    //handles the setting and playing of a footstep soundeffect
-    public void FootStepSFX()
-    {
-        if (footStepSource.isPlaying == true) { footStepSource.Stop(); }
-
-        int ranNum = UnityEngine.Random.Range(1, stoneFootstepSfx.Length);
-        footStepSource.clip = stoneFootstepSfx[ranNum];
-        footStepSource.Play();
-    }
-
-    public void ArrowFireSFX(int IsBeingDrawn)
-    {
-        if (bowSource.isPlaying == true) { bowSource.Stop(); }
-
-        switch(IsBeingDrawn)
-        {
-            case 1:
-                bowSource.clip = bowdrawingSfx;
-                break;
-            case 2:
-                bowSource.clip = bowreleasingSfx;
-                break;
-        }
-
-        bowSource.Play();
+        UI.SetPowerText(arrowFireForce);
     }
 
     //casts a ray from the centre of the screen and returns the hit data

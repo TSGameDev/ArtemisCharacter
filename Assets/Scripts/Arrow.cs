@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Arrow : MonoBehaviour
 {
-    [SerializeField] float damage = 15f;
+    [SerializeField] int damage = 15;
     Rigidbody rb;
 
     private void Awake()
