@@ -60,13 +60,19 @@ public class CharacterMovement : MonoBehaviour
     [Header("SFX")]
     [SerializeField] private AudioSource footStepSource;
     [SerializeField] private AudioSource bowSource;
-
     [Tooltip("The array/collection of footstep SFX to be played at random when play is walking on stone")]
     [SerializeField] private AudioClip[] stoneFootstepSfx;
     [Tooltip("The SFX of the string being pulledback")]
     [SerializeField] private AudioClip bowdrawingSfx;
     [Tooltip("The SFX of the string being released")]
     [SerializeField] private AudioClip bowreleasingSfx;
+
+    [Header("Animations")]
+    [SerializeField] private int dodgeActionID;
+    [SerializeField] private int punchActionID;
+    [SerializeField] private int kickActionID;
+    [SerializeField] private int equipBowActionID;
+    [SerializeField] private int unequipBowActionID;
     
     #region Get-Setters
 
@@ -126,14 +132,12 @@ public class CharacterMovement : MonoBehaviour
     int AnimWalkHash = Animator.StringToHash("Walk");
     int AnimRunHash = Animator.StringToHash("Run");
     int AnimArmedHash = Animator.StringToHash("Armed");
-    int AnimDiveHash = Animator.StringToHash("Dive");
-    int AnimPunchHash = Animator.StringToHash("Punch");
-    int AnimKickHash = Animator.StringToHash("Kick");
-    int AnimDrawBowHash = Animator.StringToHash("DrawBow");
-    int AnimUndrawBowHash = Animator.StringToHash("UndrawBow");
     int AnimFireArrowHash = Animator.StringToHash("FireArrow");
     int AnimAimingHash = Animator.StringToHash("isAiming");
-
+    int AnimActionHash = Animator.StringToHash("Action");
+    int AnimActionIDHash = Animator.StringToHash("ActionID");
+    int AnimDamageHash = Animator.StringToHash("Damage");
+    int AnimDamageIDHash = Animator.StringToHash("DamageID");
     #endregion
 
     void Awake()
@@ -250,21 +254,24 @@ public class CharacterMovement : MonoBehaviour
     //Makes the character dodge or dive and reduces stamina by the dodge cost
     public void DodgeDive()
     {
-        anim.SetTrigger(AnimDiveHash);
+        anim.SetTrigger(AnimActionHash);
+        anim.SetInteger(AnimActionIDHash, dodgeActionID);
         attributes.ReduceStamina(dodgeCost);
     }
 
     //Makes the character punch and reduces stamina by punch cost
     public void Punch()
     {
-        anim.SetTrigger(AnimPunchHash);
+        anim.SetTrigger(AnimActionHash);
+        anim.SetInteger(AnimActionIDHash, punchActionID);
         attributes.ReduceStamina(punchCost);
     }
 
     //Makes the character kick and reduces stamina by kick cost
     public void Kick()
     {
-        anim.SetTrigger(AnimKickHash);
+        anim.SetTrigger(AnimActionHash);
+        anim.SetInteger(AnimActionIDHash, kickActionID);
         attributes.ReduceStamina(kickCost);
     }
 
@@ -272,9 +279,15 @@ public class CharacterMovement : MonoBehaviour
     public void EquipUnequipBow()
     {
         if(isArmed)
-            anim.SetTrigger(AnimUndrawBowHash);
+        {
+            anim.SetTrigger(AnimActionHash);
+            anim.SetInteger(AnimActionIDHash, unequipBowActionID);
+        }
         else
-            anim.SetTrigger(AnimDrawBowHash);
+        {
+            anim.SetTrigger(AnimActionHash);
+            anim.SetInteger(AnimActionIDHash, equipBowActionID);
+        }
 
         isArmed = !isArmed;
         anim.SetBool(AnimArmedHash, isArmed);
@@ -405,6 +418,5 @@ public class CharacterMovement : MonoBehaviour
         Physics.Raycast(ray, out RaycastHit raycastHit, 999f, hitLayer);
         return raycastHit;
     }
-
 
 }

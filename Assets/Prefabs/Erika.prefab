@@ -2182,6 +2182,11 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 27fe24ea3da7ae34fa36b69ab2c852ef, type: 3}
   bowdrawingSfx: {fileID: 8300000, guid: 8464e2d1a75243544b69cac42eb6d049, type: 3}
   bowreleasingSfx: {fileID: 8300000, guid: c045775680b326143a4a75a28d9c72ff, type: 3}
+  dodgeActionID: 2
+  punchActionID: 0
+  kickActionID: 1
+  equipBowActionID: 3
+  unequipBowActionID: 4
 --- !u!114 &6173322222579470631
 MonoBehaviour:
   m_ObjectHideFlags: 0
