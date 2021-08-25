@@ -2061,6 +2061,8 @@ GameObject:
   - component: {fileID: 1022006330}
   - component: {fileID: 6470731542247498957}
   - component: {fileID: 7697585782774962942}
+  - component: {fileID: 6197719733656886189}
+  - component: {fileID: 4728003241319555515}
   m_Layer: 7
   m_Name: Erika
   m_TagString: Untagged
@@ -2151,28 +2153,8 @@ MonoBehaviour:
   cam: {fileID: 0}
   freeLookCam: {fileID: 0}
   aimCam: {fileID: 0}
-  characterRoot: {fileID: 1215446826}
   turnSmoothTime: 0.1
   lockonMovementChangeSpeed: 5
-  aimSensitivity: 50
-  dodgeCost: 10
-  punchCost: 10
-  kickCost: 10
-  hitLayer:
-    serializedVersion: 2
-    m_Bits: 65
-  bow: {fileID: 1271627709564355778}
-  disarmedBow: {fileID: 7007553110901573631}
-  arrow: {fileID: 6211731669919962456}
-  arrowProjectile: {fileID: 1572036002376829195, guid: ef6a5bb4091fd15488745b43015f004d, type: 3}
-  arrowSpawnPoint: {fileID: 5166940486636117811}
-  arrowForceMax: 200
-  arrowForceMin: 50
-  dodgeActionID: 2
-  punchActionID: 0
-  kickActionID: 1
-  equipBowActionID: 3
-  unequipBowActionID: 4
 --- !u!114 &6173322222579470631
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2431,6 +2413,50 @@ MonoBehaviour:
   health: {fileID: 0}
   stamina: {fileID: 0}
   powerTxt: {fileID: 0}
+--- !u!114 &6197719733656886189
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6256415564896048419}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c61934fb151a43d41bc3fe1e305bf3f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dodgeCost: 10
+  punchCost: 10
+  kickCost: 10
+  dodgeActionID: 2
+  punchActionID: 0
+  kickActionID: 1
+  equipBowActionID: 3
+  unequipBowActionID: 4
+  bow: {fileID: 1271627709564355778}
+  disarmedBow: {fileID: 7007553110901573631}
+--- !u!114 &4728003241319555515
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6256415564896048419}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab31c04c0c7da5448bb361df24eb079e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  aimSensitivity: 50
+  characterRoot: {fileID: 1215446826}
+  hitLayer:
+    serializedVersion: 2
+    m_Bits: 65
+  arrow: {fileID: 6211731669919962456}
+  arrowProjectile: {fileID: 1572036002376829195, guid: ef6a5bb4091fd15488745b43015f004d, type: 3}
+  arrowSpawnPoint: {fileID: 5166940486636117811}
+  arrowForceMax: 200
+  arrowForceMin: 50
 --- !u!1 &6328788426149383794
 GameObject:
   m_ObjectHideFlags: 0
