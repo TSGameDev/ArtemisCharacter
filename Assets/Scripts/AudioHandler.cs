@@ -11,15 +11,12 @@ public class AudioHandler : MonoBehaviour
     [SerializeField] private SimpleAudioEvent bowDrawnSFX;
     [SerializeField] private SimpleAudioEvent bowReleasedSFX;
 
-    private Vector3 lastKnownPos;
+    public bool inAction = false;
 
     public void FootStepSFX()
     {
-        if(transform.position != lastKnownPos)
-        {
-            lastKnownPos = transform.position;
-            stoneFootstepSFX.Play(footstepSource);
-        }
+        if(inAction) { return; }
+        stoneFootstepSFX.Play(footstepSource);
     }
 
     public void FireSFX(int IsDrawn)
